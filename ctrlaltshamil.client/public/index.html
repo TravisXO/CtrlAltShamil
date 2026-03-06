@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  index.html  (UPDATED — SEO & Performance)
+  ─────────────────────────────────────────────────────────────────────────────
+  Changes:
+    1. Base meta tags (charset, viewport, theme-color)
+    2. Preconnect hints for fonts and external resources
+    3. Open Graph / Twitter fallback (overridden per-page by react-helmet-async)
+    4. Descriptive title fallback
+    5. favicon + apple-touch-icon references
+    6. NO render-blocking resources
+  ─────────────────────────────────────────────────────────────────────────────
+  IMPORTANT: Replace ctrlaltshamil.com with your real domain everywhere below.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Favicons ──────────────────────────────────────────────────────── -->
+  <!-- Generate from: https://realfavicongenerator.net  (use your logo/headshot) -->
+  <link rel="icon"             href="/favicon.ico" sizes="any" />
+  <link rel="icon"             href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest"         href="/site.webmanifest" />
+
+  <!-- ── Theme ─────────────────────────────────────────────────────────── -->
+  <meta name="theme-color" content="#E8AA3A" />
+
+  <!-- ── Default Title + Meta (react-helmet-async overrides per page) ──── -->
+  <title>Ctrl Alt Shamil | Full-Stack Developer & SEO Strategist | Lusaka, Zambia</title>
+  <meta name="description"
+        content="Alexander Shamil Mondoka — Full-Stack Software Engineer (ASP.NET 8, React, C#) and Technical SEO Strategist based in Lusaka, Zambia. Delivered +217% organic traffic growth." />
+
+  <!-- ── Default Open Graph (overridden per-page) ─────────────────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://ctrlaltshamil.com/" />
+  <meta property="og:title"       content="Ctrl Alt Shamil | Full-Stack Developer & SEO Strategist" />
+  <meta property="og:description" content="Alexander Shamil Mondoka — Full-Stack Developer & Technical SEO Strategist. Lusaka, Zambia. ASP.NET 8, React, C#." />
+  <meta property="og:image"       content="https://ctrlaltshamil.com/og-home.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="Ctrl Alt Shamil" />
+  <meta property="og:locale"      content="en_ZM" />
+
+  <!-- ── Twitter Card ──────────────────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Ctrl Alt Shamil | Full-Stack Developer & SEO Strategist" />
+  <meta name="twitter:description" content="Alexander Shamil Mondoka — Full-Stack Developer & Technical SEO Strategist. Lusaka, Zambia." />
+  <meta name="twitter:image"       content="https://ctrlaltshamil.com/og-home.jpg" />
+
+  <!-- ── Canonical ─────────────────────────────────────────────────────── -->
+  <link rel="canonical" href="https://ctrlaltshamil.com/" />
+
+  <!-- ── Geographic ────────────────────────────────────────────────────── -->
+  <meta name="geo.region"    content="ZM-09" />
+  <meta name="geo.placename" content="Lusaka, Zambia" />
+  <meta name="geo.position"  content="-15.3875;28.3228" />
+  <meta name="ICBM"          content="-15.3875, 28.3228" />
+
+  <!-- ── Authorship ────────────────────────────────────────────────────── -->
+  <meta name="author"  content="Alexander Shamil Mondoka" />
+  <meta name="creator" content="Alexander Shamil Mondoka" />
+
+  <!-- ── Crawl instructions ────────────────────────────────────────────── -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+  <!-- ── Preconnects — speeds up external resource loading ────────────── -->
+  <!-- YouTube (for the background audio embed in Hero) -->
+  <link rel="preconnect" href="https://www.youtube.com" />
+  <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+  <!-- Google Fonts (add if you use any) -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
+  <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+
+  <!--
+    ── NOTE ON OG IMAGE ─────────────────────────────────────────────────────
+    Create a 1200×630px image for og-home.jpg and og-projects.jpg.
+    Recommended content:
+      og-home.jpg     — Your photo + "Full-Stack Developer & SEO Strategist" text
+      og-projects.jpg — Grid/collage of your project screenshots
+    Place both in your /public folder.
+    ───────────────────────────────────────────────────────────────────────────
+  -->
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

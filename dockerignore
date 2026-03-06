@@ -1,0 +1,15 @@
+**/.git
+**/.vs
+**/.vscode
+**/node_modules
+**/bin
+**/obj
+**/dist
+**/.env
+**/.env.*
+**/npm-debug.log
+**/yarn-error.log
+**/*.user
+**/*.suo
+**/Thumbs.db
+**/README.md

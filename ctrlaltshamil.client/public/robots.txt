@@ -1,0 +1,12 @@
+# robots.txt — Ctrl Alt Shamil Portfolio
+# https://ctrlaltshamil.com/robots.txt
+# ─────────────────────────────────────
+# IMPORTANT: Replace ctrlaltshamil.com with your real domain
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /swagger/
+
+# Sitemap
+Sitemap: https://ctrlaltshamil.com/sitemap.xml
