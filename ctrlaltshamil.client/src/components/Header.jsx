@@ -1,6 +1,6 @@
 ﻿// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaLinkedin, FaGithub } from 'react-icons/fa';
@@ -21,6 +21,8 @@ const socials = [
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 10);
@@ -28,13 +30,40 @@ export default function Header() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // After navigating to '/', check if we have a pending scroll target in state
+    useEffect(() => {
+        if (location.pathname === '/' && location.state?.scrollTo) {
+            const id = location.state.scrollTo;
+            // Small delay lets the home page fully render before scrolling
+            const timer = setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                // Clear the state so back/forward navigation doesn't re-trigger it
+                navigate('/', { replace: true, state: {} });
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [location, navigate]);
+
     const handleNavClick = (e, path) => {
-        const hash = path.includes('#') ? path.split('#')[1] : null;
-        if (!hash) return;
+        const hasHash = path.includes('#');
+        if (!hasHash) {
+            setMenuOpen(false);
+            return;
+        }
+
         e.preventDefault();
-        const el = document.getElementById(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        const hash = path.split('#')[1];
         setMenuOpen(false);
+
+        if (location.pathname === '/') {
+            // Already on home — just scroll
+            const el = document.getElementById(hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // On another page — navigate home and pass the scroll target via state
+            navigate('/', { state: { scrollTo: hash } });
+        }
     };
 
     return (
@@ -61,11 +90,9 @@ export default function Header() {
 
                 {/* ── Logo ── */}
                 <Link to="/" className="flex items-center gap-3 cursor-pointer group">
-                    {/* Animated bracket around the C */}
                     <div className="relative w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center font-display font-black text-xl lg:text-2xl transition-all duration-300"
                         style={{ background: 'var(--color-vault-gold)', color: '#070d0c', border: '2px solid rgba(255,255,255,0.15)', boxShadow: '0 0 16px rgba(232,170,58,0.35)' }}>
                         C
-                        {/* Corner sparks on hover */}
                         <span className="absolute -top-[1px] -left-[1px] w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
                             style={{ borderColor: 'rgba(255,255,255,0.6)' }} />
                         <span className="absolute -bottom-[1px] -right-[1px] w-2 h-2 border-b border-r opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
@@ -96,10 +123,8 @@ export default function Header() {
                             onMouseEnter={e => e.currentTarget.style.color = 'var(--color-vault-gold)'}
                             onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.65)'}
                         >
-                            {/* Underline sweep */}
                             <span className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full pointer-events-none"
                                 style={{ background: 'var(--color-vault-gold)' }} />
-                            {/* Index number */}
                             <span className="absolute top-[3px] left-2 font-display text-[7px] transition-colors duration-200 opacity-0 group-hover:opacity-100"
                                 style={{ color: 'rgba(232,170,58,0.5)' }}>
                                 {String(i + 1).padStart(2, '0')}
@@ -111,30 +136,29 @@ export default function Header() {
 
                 {/* ── Desktop Socials + CTA ── */}
                 <div className="hidden xl:flex items-center gap-6">
-                    {/* Socials */}
                     <div className="flex gap-3">
                         {socials.map(({ icon, label, href }) => (
                             <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
                                 className="w-8 h-8 flex items-center justify-center text-base transition-all duration-200"
                                 style={{ color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}
-                                onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-vault-gold)'; e.currentTarget.style.borderColor = 'var(--color-vault-gold)'; e.currentTarget.style.boxShadow = '0 0 10px rgba(232,170,58,0.2)'; }}
-                                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                                onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-vault-gold)'; e.currentTarget.style.borderColor = 'rgba(232,170,58,0.5)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}>
                                 {icon}
                             </a>
                         ))}
                     </div>
 
-                    {/* Divider */}
                     <span className="w-[1px] h-6" style={{ background: 'rgba(232,170,58,0.2)' }} />
 
                     {/* CTA */}
-                    <Link to="/#contact"
-                        className="font-display font-black uppercase text-[10px] tracking-[0.2em] px-5 py-[9px] transition-all duration-200"
+                    <button
+                        onClick={e => handleNavClick(e, '/#contact')}
+                        className="font-display font-black uppercase text-[10px] tracking-[0.2em] px-5 py-[9px] transition-all duration-200 cursor-pointer"
                         style={{ background: 'var(--color-vault-gold)', color: '#070d0c', border: '2px solid var(--color-vault-gold)', boxShadow: '3px 3px 0px rgba(46,110,101,0.7)' }}
                         onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0px rgba(46,110,101,0.7)'; e.currentTarget.style.transform = 'translate(1px,1px)'; e.currentTarget.style.filter = 'brightness(1.08)'; }}
                         onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0px rgba(46,110,101,0.7)'; e.currentTarget.style.transform = 'translate(0,0)'; e.currentTarget.style.filter = 'none'; }}>
                         [ Initiate Comms ]
-                    </Link>
+                    </button>
                 </div>
 
                 {/* ── Mobile: Socials + Hamburger ── */}
@@ -204,7 +228,6 @@ export default function Header() {
                                     onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-vault-gold)'; e.currentTarget.style.background = 'rgba(46,110,101,0.06)'; }}
                                     onMouseLeave={e => { e.currentTarget.style.color = 'rgba(240,224,196,0.6)'; e.currentTarget.style.background = 'transparent'; }}
                                 >
-                                    {/* Left sweep */}
                                     <span className="absolute left-0 top-0 w-[2px] h-0 group-hover:h-full transition-all duration-300 pointer-events-none"
                                         style={{ background: 'var(--color-vault-gold)' }} />
                                     <span className="font-display text-[9px] opacity-40 group-hover:opacity-100 transition-opacity flex-shrink-0"
@@ -228,11 +251,12 @@ export default function Header() {
                                         </a>
                                     ))}
                                 </div>
-                                <Link to="/#contact" onClick={() => setMenuOpen(false)}
-                                    className="font-display font-black uppercase text-[10px] tracking-[0.2em] px-5 py-2 transition-all duration-200"
+                                <button
+                                    onClick={e => handleNavClick(e, '/#contact')}
+                                    className="font-display font-black uppercase text-[10px] tracking-[0.2em] px-5 py-2 transition-all duration-200 cursor-pointer"
                                     style={{ background: 'var(--color-vault-gold)', color: '#070d0c', border: '2px solid var(--color-vault-gold)', boxShadow: '3px 3px 0px rgba(46,110,101,0.7)' }}>
                                     [ Initiate Comms ]
-                                </Link>
+                                </button>
                             </div>
                         </nav>
                     </motion.div>
