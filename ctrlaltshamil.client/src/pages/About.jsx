@@ -1,9 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
 import headshot from "../assets/headshot.jpg";
 
-/* ── useFadeIn ───────────────────────────────────────────────────── */
+/* ── SEO: set document meta for this page ──────────────────────── */
+function usePageSEO() {
+    useEffect(() => {
+        const prev = document.title;
+        document.title = "About Alexander Shamil Mondoka | Full-Stack Developer & SEO Specialist in Lusaka, Zambia";
+
+        const setMeta = (name, content) => {
+            let el = document.querySelector(`meta[name="${name}"]`);
+            if (!el) {
+                el = document.createElement("meta");
+                el.setAttribute("name", name);
+                document.head.appendChild(el);
+            }
+            el.setAttribute("content", content);
+        };
+
+        const setOG = (prop, content) => {
+            let el = document.querySelector(`meta[property="${prop}"]`);
+            if (!el) {
+                el = document.createElement("meta");
+                el.setAttribute("property", prop);
+                document.head.appendChild(el);
+            }
+            el.setAttribute("content", content);
+        };
+
+        setMeta("description", "Learn about Alexander Shamil Mondoka (CtrlAltShamil). Software Engineering graduate, full-stack developer and technical SEO specialist based in Lusaka, Zambia. Building web apps with ASP.NET and React for clients worldwide.");
+        setOG("og:title", "About Alexander Shamil Mondoka | CtrlAltShamil");
+        setOG("og:description", "Software Engineering graduate, full-stack developer and technical SEO specialist in Lusaka, Zambia. Available for remote work worldwide.");
+        setOG("og:url", "https://YOURDOMAIN.com/about");
+
+        return () => { document.title = prev; };
+    }, []);
+}
+
+/* ── useFadeIn ─────────────────────────────────────────────────── */
 function useFadeIn(threshold = 0.08) {
     const ref = useRef(null);
     const [visible, setVisible] = useState(false);
@@ -11,7 +45,12 @@ function useFadeIn(threshold = 0.08) {
         const el = ref.current;
         if (!el) return;
         const obs = new IntersectionObserver(
-            ([e]) => { if (e.isIntersecting) setVisible(true); },
+            ([e]) => {
+                if (e.isIntersecting) {
+                    setVisible(true);
+                    obs.disconnect();
+                }
+            },
             { threshold }
         );
         obs.observe(el);
@@ -20,7 +59,7 @@ function useFadeIn(threshold = 0.08) {
     return { ref, visible };
 }
 
-/* ── Section wrapper with fade ───────────────────────────────────── */
+/* ── Section wrapper with fade ─────────────────────────────────── */
 function FadeSection({ children, className = "", delay = 0 }) {
     const { ref, visible } = useFadeIn();
     return (
@@ -38,30 +77,28 @@ function FadeSection({ children, className = "", delay = 0 }) {
     );
 }
 
-/* ── Editorial section heading ───────────────────────────────────── */
-function SectionHeading({ eyebrow, title, accent = "#00CFFF" }) {
+/* ── Section heading (consistent with home) ────────────────────── */
+function SectionHeading({ eyebrow, title, accentText, accent = "var(--cyan)" }) {
     return (
         <div className="mb-10 sm:mb-12">
-            <div className="flex items-center gap-4 mb-4">
-                <div className="h-px flex-1 max-w-[3rem]" style={{ background: accent }} />
-                <span
-                    className="text-[10px] font-mono tracking-[0.25em] uppercase"
-                    style={{ color: accent }}
-                >
-                    {eyebrow}
-                </span>
-            </div>
-            <h2
-                className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.05]"
-                style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+            <span
+                className="inline-block text-xs font-mono tracking-[0.2em] uppercase mb-4"
+                style={{ color: accent }}
             >
-                {title}
+                {eyebrow}
+            </span>
+            <h2
+                className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight"
+                style={{ fontFamily: "var(--heading)" }}
+            >
+                {title}{" "}
+                {accentText && <span style={{ color: accent }}>{accentText}</span>}
             </h2>
         </div>
     );
 }
 
-/* ── Divider ─────────────────────────────────────────────────────── */
+/* ── Divider ───────────────────────────────────────────────────── */
 function Divider() {
     return (
         <div className="w-full h-px my-16 sm:my-24" style={{ background: "rgba(255,255,255,0.06)" }} />
@@ -69,7 +106,7 @@ function Divider() {
 }
 
 /* ══════════════════════════════════════════
-   HERO SECTION
+   HERO
 ══════════════════════════════════════════ */
 function HeroSection() {
     const [mounted, setMounted] = useState(false);
@@ -80,8 +117,8 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full min-h-svh flex flex-col overflow-hidden"
-            aria-label="Hero — Alexander Shamil"
+            className="relative w-full flex flex-col overflow-hidden"
+            aria-label="About Alexander Shamil"
         >
             {/* Background grid */}
             <div
@@ -92,74 +129,48 @@ function HeroSection() {
                 }}
                 aria-hidden="true"
             />
-
-            {/* Top fade */}
             <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-40"
                 style={{ background: "linear-gradient(to bottom, #080810 0%, transparent 100%)" }}
                 aria-hidden="true"
             />
-
-            {/* Bottom fade */}
             <div
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-48 sm:h-64"
                 style={{ background: "linear-gradient(to top, #080810 0%, transparent 100%)" }}
                 aria-hidden="true"
             />
-
-            {/* Dual ambient glows */}
             <div
                 className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] opacity-[0.08] blur-3xl"
                 style={{ background: "radial-gradient(ellipse, #00CFFF 0%, transparent 70%)" }}
                 aria-hidden="true"
             />
-            <div
-                className="pointer-events-none absolute top-20 right-0 w-[400px] h-[400px] opacity-[0.07] blur-3xl"
-                style={{ background: "radial-gradient(ellipse, #aa3bff 0%, transparent 70%)" }}
-                aria-hidden="true"
-            />
 
-            {/* Issue label — top right */}
-            <div
-                className="absolute top-8 right-0 flex items-center gap-3 px-6 sm:px-8 lg:px-16 xl:px-24"
-                style={{
-                    opacity: mounted ? 1 : 0,
-                    transition: "opacity 1s ease 0.8s",
-                }}
-            >
-                <span className="text-[9px] font-mono tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>
-                    About · Issue No.01
-                </span>
-                <div className="w-8 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-            </div>
-
-            {/* Main hero content */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center w-full px-4 sm:px-8 lg:px-16 xl:px-24 pt-32 sm:pt-40 pb-16 sm:pb-24">
-
-                {/* Photo + headline row */}
+            <div className="relative z-10 flex-1 flex flex-col justify-center w-full px-[var(--px)] sm:px-[var(--px-sm)] lg:px-[var(--px-lg)] xl:px-[var(--px-xl)] pt-36 sm:pt-44 pb-16 sm:pb-24">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-16">
 
-                    {/* Left — text */}
+                    {/* Left text */}
                     <div className="flex flex-col gap-6 max-w-2xl">
-
                         {/* Badge */}
                         <div
                             style={{
                                 opacity: mounted ? 1 : 0,
-                                transform: mounted ? "translateY(0)" : "translateY(20px)",
+                                transform: mounted ? "translateY(0)" : "translateY(16px)",
                                 transition: "opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s",
                             }}
                         >
-                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono tracking-[0.18em] uppercase text-[#00CFFF] bg-[#00CFFF0F] border border-[#00CFFF25]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#00FF94] shadow-[0_0_6px_#00FF94] animate-pulse" aria-hidden="true" />
+                            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-[11px] font-mono tracking-[0.18em] uppercase text-[var(--cyan)] bg-[#00CFFF08] border border-[#00CFFF20] backdrop-blur-sm">
+                                <span className="relative flex h-2 w-2" aria-hidden="true">
+                                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--green)] opacity-60" />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--green)] shadow-[0_0_6px_#00FF94]" />
+                                </span>
                                 Surgical Precision
                             </span>
                         </div>
 
-                        {/* Headline — line-by-line reveal */}
+                        {/* Headline */}
                         <h1
-                            className="text-[clamp(3rem,10vw,7.5rem)] font-black leading-[0.92] tracking-tight text-[#F2F2FA]"
-                            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                            className="text-[clamp(2.75rem,9vw,7.25rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
+                            style={{ fontFamily: "var(--heading)" }}
                         >
                             {[
                                 { text: "Alexander", cyan: false },
@@ -171,13 +182,8 @@ function HeroSection() {
                                         style={{
                                             opacity: mounted ? 1 : 0,
                                             transform: mounted ? "translateY(0)" : "translateY(110%)",
-                                            transition: `opacity 0.7s ease ${0.25 + i * 0.12}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${0.25 + i * 0.12}s`,
-                                            ...(cyan ? {
-                                                background: "linear-gradient(90deg, #00CFFF 0%, #aa3bff 100%)",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text",
-                                            } : {}),
+                                            transition: `opacity 0.7s ease ${0.25 + i * 0.13}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${0.25 + i * 0.13}s`,
+                                            color: cyan ? "var(--cyan)" : undefined,
                                         }}
                                     >
                                         {text}
@@ -188,15 +194,15 @@ function HeroSection() {
 
                         {/* Subheadline */}
                         <p
-                            className="text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl font-mono text-[#A0A0C0]"
+                            className="text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl font-mono text-[var(--text-muted)]"
                             style={{
                                 opacity: mounted ? 1 : 0,
-                                transform: mounted ? "translateY(0)" : "translateY(20px)",
-                                transition: "opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s",
+                                transform: mounted ? "translateY(0)" : "translateY(18px)",
+                                transition: "opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s",
                             }}
                         >
                             Software Engineering graduate.{" "}
-                            <span className="text-[#F2F2FA]">Full-Stack Developer.</span>{" "}
+                            <span className="text-[var(--text-primary)]">Full-Stack Developer.</span>{" "}
                             Technical SEO specialist. Building digital products where robust architecture meets discoverability.
                         </p>
 
@@ -205,19 +211,14 @@ function HeroSection() {
                             className="flex flex-wrap gap-2"
                             style={{
                                 opacity: mounted ? 1 : 0,
-                                transform: mounted ? "translateY(0)" : "translateY(20px)",
-                                transition: "opacity 0.7s ease 0.8s, transform 0.7s ease 0.8s",
+                                transform: mounted ? "translateY(0)" : "translateY(18px)",
+                                transition: "opacity 0.7s ease 0.75s, transform 0.7s ease 0.75s",
                             }}
                         >
-                            {["ASP.NET 8", "React", "Technical SEO", "Full-Stack", "Lusaka, ZM"].map((chip, i) => (
+                            {["ASP.NET 8", "React", "Technical SEO", "Full-Stack", "Lusaka, ZM"].map((chip) => (
                                 <span
                                     key={chip}
-                                    className="text-xs font-mono tracking-wider px-3 py-1.5 rounded-full border"
-                                    style={{
-                                        borderColor: i % 2 === 0 ? "rgba(0,207,255,0.25)" : "rgba(170,59,255,0.25)",
-                                        color: i % 2 === 0 ? "#00CFFF" : "#aa3bff",
-                                        background: i % 2 === 0 ? "rgba(0,207,255,0.06)" : "rgba(170,59,255,0.06)",
-                                    }}
+                                    className="text-xs font-mono tracking-wider px-3 py-1.5 rounded-full border border-[#00CFFF25] text-[var(--cyan)] bg-[#00CFFF08]"
                                 >
                                     {chip}
                                 </span>
@@ -225,30 +226,25 @@ function HeroSection() {
                         </div>
                     </div>
 
-                    {/* Right — photo */}
+                    {/* Right photo */}
                     <div
-                        className="relative shrink-0"
+                        className="relative lg:shrink-0 max-w-sm sm:max-w-md lg:max-w-none"
                         style={{
                             opacity: mounted ? 1 : 0,
                             transform: mounted ? "translateY(0)" : "translateY(30px)",
                             transition: "opacity 1s ease 0.4s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.4s",
                         }}
                     >
-                        {/* Decorative border frame */}
                         <div
-                            className="absolute -inset-3 rounded-2xl opacity-30"
-                            style={{ background: "linear-gradient(135deg, #00CFFF, #aa3bff)", borderRadius: "1.25rem" }}
-                            aria-hidden="true"
-                        />
-                        <div
-                            className="absolute -inset-3 rounded-2xl"
-                            style={{ background: "#080810", borderRadius: "1.15rem", inset: "-10px" }}
+                            className="absolute -inset-[2px] rounded-xl opacity-20"
+                            style={{ background: "linear-gradient(135deg, #00CFFF, transparent 60%)" }}
                             aria-hidden="true"
                         />
                         <img
                             src={headshot}
-                            alt="Alexander Shamil"
-                            className="relative w-64 h-80 sm:w-80 sm:h-[26rem] object-cover rounded-xl"
+                            alt="Alexander Shamil Mondoka"
+                            className="relative w-full lg:w-80 aspect-[3/4] object-cover rounded-xl border border-[var(--border-subtle)]"
+                            loading="eager"
                         />
                     </div>
                 </div>
@@ -257,15 +253,10 @@ function HeroSection() {
                 <div
                     className="mt-16 sm:mt-20 flex items-center gap-3"
                     aria-hidden="true"
-                    style={{
-                        opacity: mounted ? 0.4 : 0,
-                        transition: "opacity 1s ease 1.3s",
-                    }}
+                    style={{ opacity: mounted ? 1 : 0, transition: "opacity 1.2s ease 1.4s" }}
                 >
-                    <div className="flex flex-col items-center gap-1">
-                        <div className="w-px h-8 bg-gradient-to-b from-[#FFFFFF] to-transparent animate-pulse" />
-                    </div>
-                    <span className="text-[11px] font-mono text-[#FFFFFF] tracking-[0.2em] uppercase">Scroll</span>
+                    <div className="w-px h-9 bg-gradient-to-b from-white to-transparent scroll-pulse" />
+                    <span className="text-[11px] font-mono text-white tracking-[0.2em] uppercase">Scroll</span>
                 </div>
             </div>
         </section>
@@ -273,50 +264,42 @@ function HeroSection() {
 }
 
 /* ══════════════════════════════════════════
-   SURGICAL PRECISION MANIFESTO
+   MANIFESTO
 ══════════════════════════════════════════ */
 function ManifestoSection() {
     return (
         <FadeSection>
             <div
-                className="relative rounded-3xl overflow-hidden p-8 sm:p-12 lg:p-16"
-                style={{
-                    background: "linear-gradient(135deg, rgba(0,207,255,0.05) 0%, rgba(170,59,255,0.05) 100%)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                }}
+                className="relative rounded-3xl overflow-hidden p-8 sm:p-12 lg:p-16 border border-[rgba(255,255,255,0.07)]"
+                style={{ background: "linear-gradient(135deg, rgba(0,207,255,0.05) 0%, rgba(0,207,255,0.02) 100%)" }}
             >
-                {/* Large decorative quote mark */}
                 <span
                     className="pointer-events-none absolute top-4 right-8 text-[10rem] font-black leading-none select-none"
-                    style={{ color: "rgba(0,207,255,0.04)", fontFamily: "'Syne', sans-serif" }}
+                    style={{ color: "rgba(0,207,255,0.04)", fontFamily: "var(--heading)" }}
                     aria-hidden="true"
                 >
-                    "
+                    &ldquo;
                 </span>
 
                 <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-px" style={{ background: "#00CFFF" }} />
-                    <span className="text-[10px] font-mono tracking-[0.25em] uppercase" style={{ color: "#00CFFF" }}>
+                    <div className="w-8 h-px bg-[var(--cyan)]" />
+                    <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[var(--cyan)]">
                         Philosophy
                     </span>
                 </div>
 
                 <blockquote>
                     <p
-                        className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-6 max-w-4xl"
-                        style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                        className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-6 max-w-4xl text-[var(--text-primary)]"
+                        style={{ fontFamily: "var(--heading)" }}
                     >
-                        Development isn't just about{" "}
-                        <span style={{ color: "#00CFFF" }}>functionality</span>
-                        {" "}— it's about building digital products that are as robust and scalable as they are{" "}
-                        <span style={{ color: "#aa3bff" }}>discoverable</span>.
+                        Development is not just about{" "}
+                        <span className="text-[var(--cyan)]">functionality</span>. It is about building digital products that are as robust and scalable as they are{" "}
+                        <span className="text-[var(--cyan)]">discoverable</span>.
                     </p>
-                    <p
-                        className="text-base sm:text-lg leading-relaxed max-w-2xl"
-                        style={{ color: "rgba(255,255,255,0.55)" }}
-                    >
-                        Surgical Precision isn't a buzzword. It's the commitment to never shipping something
-                        you can't stand behind — where every architectural decision, every query optimisation,
+                    <p className="text-base sm:text-lg leading-relaxed max-w-2xl text-[var(--text-dim)]">
+                        Surgical Precision is not a buzzword. It is the commitment to never shipping something
+                        you cannot stand behind. Every architectural decision, every query optimisation,
                         every redirect chain is deliberate and defensible.
                     </p>
                 </blockquote>
@@ -332,11 +315,10 @@ function TechnicalSection() {
     const stack = [
         { label: "ASP.NET Core 8", cat: "backend" },
         { label: "React", cat: "frontend" },
-        { label: "Entity Framework", cat: "backend" },
+        { label: "C#", cat: "backend" },
+        { label: "JavaScript", cat: "frontend" },
         { label: "SQL Server", cat: "backend" },
-        { label: "Tailwind CSS", cat: "frontend" },
-        { label: "Vite", cat: "frontend" },
-        { label: "CI/CD · GitHub", cat: "devops" },
+        { label: "PostgreSQL", cat: "backend" },
         { label: "Render", cat: "devops" },
         { label: "Cloudflare", cat: "devops" },
         { label: "Google Search Console", cat: "seo" },
@@ -357,36 +339,33 @@ function TechnicalSection() {
     return (
         <section>
             <FadeSection>
-                <SectionHeading eyebrow="The Technical World" title="Architecture. Precision. Craft." accent="#00CFFF" />
+                <SectionHeading eyebrow="The Technical World" title="Architecture. Precision." accentText="Craft." />
             </FadeSection>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-                {/* Left — copy */}
                 <FadeSection delay={0.1}>
                     <div className="flex flex-col gap-6">
-                        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
-                            My technical toolkit is centred around the <span style={{ color: "#00CFFF" }}>ASP.NET 8 ecosystem</span> and <span style={{ color: "#aa3bff" }}>React</span> — bridging the gap between powerful back-end logic and seamless, interactive user experiences.
+                        <p className="text-base sm:text-lg leading-relaxed text-[var(--text-dim)]">
+                            My technical toolkit is centred around the <span className="text-[var(--cyan)]">ASP.NET 8 ecosystem</span> and <span className="text-[#aa3bff]">React</span>. I bridge the gap between powerful back-end logic and seamless interactive user experiences.
                         </p>
-                        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
-                            I take a deep interest in the "invisible" work that defines a site's success — auditing Core Web Vitals, navigating complex URL redirect logic, optimising Entity Framework queries. I view a project's architecture much like a living organism where every component must work in harmony.
+                        <p className="text-base sm:text-lg leading-relaxed text-[var(--text-dim)]">
+                            I take a deep interest in the invisible work that defines a site's success. Auditing Core Web Vitals, navigating complex URL redirect logic, optimising Entity Framework queries. I view a project's architecture much like a living organism where every component must work in harmony.
                         </p>
-                        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
-                            Whether setting up CI/CD pipelines on GitHub or fine-tuning site architecture to eliminate 301 errors, my focus remains on delivering <span style={{ color: "#00CFFF" }}>production-ready, professional-grade solutions</span>.
+                        <p className="text-base sm:text-lg leading-relaxed text-[var(--text-dim)]">
+                            Whether setting up CI/CD pipelines on GitHub or fine-tuning site architecture to eliminate 301 errors, my focus remains on delivering <span className="text-[var(--cyan)]">production-ready, professional-grade solutions</span>.
                         </p>
 
-                        {/* Legend */}
                         <div className="flex flex-wrap gap-4 pt-2">
                             {Object.entries(catColour).map(([cat, c]) => (
                                 <div key={cat} className="flex items-center gap-1.5">
                                     <span className="w-2 h-2 rounded-full" style={{ background: c.text }} />
-                                    <span className="text-[10px] font-mono uppercase tracking-widest capitalize" style={{ color: "rgba(255,255,255,0.35)" }}>{cat}</span>
+                                    <span className="text-[10px] font-mono uppercase tracking-widest capitalize text-[#505070]">{cat}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </FadeSection>
 
-                {/* Right — chip grid */}
                 <FadeSection delay={0.2}>
                     <div className="flex flex-wrap gap-2">
                         {stack.map((s) => {
@@ -414,39 +393,50 @@ function TechnicalSection() {
 function TimelineSection() {
     const events = [
         {
-            year: "2025 →",
-            title: "BNOP Media — SEO & Web Dev",
-            desc: "Working across client projects as a software engineer and SEO specialist, blending technical build work with search strategy.",
+            date: "Feb 2026 → Mar 2026",
+            title: "House To Home — Built from scratch",
+            desc: "Designed and deployed a full React + ASP.NET Core 8 real estate platform with server-side meta injection, CI/CD on Render and a 90+ Lighthouse score.",
             accent: "#00CFFF",
         },
         {
-            year: "2025",
-            title: "HouseToHome — Built from scratch",
-            desc: "Designed and deployed a full React + ASP.NET Core 8 real estate platform with server-side meta injection, CI/CD on Render, and a 95+ Lighthouse score.",
-            accent: "#aa3bff",
-        },
-        {
-            year: "2024",
+            date: "Nov 2025 → Jan 2026",
             title: "Classic Zambia Safaris — SEO Engagement",
             desc: "3-month technical SEO campaign growing monthly organic visitors from 132 to 227, DR 19 to 23, with 137 keywords entering rankings.",
             accent: "#2EF09A",
         },
         {
-            year: "2024",
-            title: "Software Engineering Graduate",
-            desc: "Completed a Software Engineering degree — solidifying the architectural thinking and systems-level perspective that underpins everything I build.",
+            date: "Sept 2025 → Oct 2025",
+            title: "ABSA Marathon Documentary",
+            desc: "Contributed to the production of the documentary \"The Seven Hour Man,\" a film exploring addiction, recovery and human resilience. Supported the primary production team by coordinating logistics to ensure smooth on-site operations. Assisted David Kashimba during filming sequences to capture high-quality footage across marathon locations.",
+            accent: "#aa3bff",
+        },
+        {
+            date: "Jan 2025 → Apr 2026",
+            title: "BNOP Media — SEO & Web Developer",
+            desc: "Working across client projects as a web developer and SEO specialist, blending technical build work with search strategy.",
+            accent: "#00CFFF",
+        },
+        {
+            date: "Apr 2023 → Aug 2023",
+            title: "Integrated Carrier Express — Logistics IT Internship",
+            desc: "5-month trainee programme dealing with transshipping from China to Angola to the rest of the world and utilising programming skills with tracking tools to follow and log successful deliveries.",
             accent: "#F0C22E",
+        },
+        {
+            date: "July 2019 → June 2024",
+            title: "Software Engineering Graduate",
+            desc: "Completed a Software Engineering degree, solidifying the architectural thinking and systems-level perspective that underpins everything I build.",
+            accent: "#2EF09A",
         },
     ];
 
     return (
         <section>
             <FadeSection>
-                <SectionHeading eyebrow="Career Journey" title="The build log." accent="#aa3bff" />
+                <SectionHeading eyebrow="Career Journey" title="The" accentText="build log." />
             </FadeSection>
 
             <div className="relative flex flex-col gap-0">
-                {/* Vertical line */}
                 <div
                     className="absolute left-[11px] top-3 bottom-3 w-px"
                     style={{ background: "rgba(255,255,255,0.07)" }}
@@ -454,30 +444,28 @@ function TimelineSection() {
                 />
 
                 {events.map((e, i) => (
-                    <FadeSection key={i} delay={i * 0.1}>
-                        <div className="relative flex gap-6 pb-10">
-                            {/* Dot */}
-                            <div className="relative shrink-0 mt-1">
+                    <FadeSection key={i} delay={i * 0.08}>
+                        <div className="relative flex gap-5 sm:gap-6 pb-10">
+                            <div className="relative shrink-0 mt-1.5">
                                 <div
                                     className="w-6 h-6 rounded-full border-2 flex items-center justify-center"
-                                    style={{ borderColor: e.accent, background: "#080810" }}
+                                    style={{ borderColor: e.accent, background: "var(--surface)" }}
                                 >
                                     <div className="w-2 h-2 rounded-full" style={{ background: e.accent }} />
                                 </div>
                             </div>
 
-                            {/* Content */}
-                            <div className="flex flex-col gap-2 pt-0.5">
-                                <div className="flex items-center gap-3 flex-wrap">
-                                    <span className="text-xs font-mono tracking-widest" style={{ color: e.accent }}>{e.year}</span>
-                                    <h3
-                                        className="text-base sm:text-lg font-bold"
-                                        style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
-                                    >
-                                        {e.title}
-                                    </h3>
-                                </div>
-                                <p className="text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.55)" }}>
+                            <div className="flex flex-col gap-2 pt-0.5 min-w-0">
+                                <span className="text-[11px] font-mono tracking-widest" style={{ color: e.accent }}>
+                                    {e.date}
+                                </span>
+                                <h3
+                                    className="text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug"
+                                    style={{ fontFamily: "var(--heading)" }}
+                                >
+                                    {e.title}
+                                </h3>
+                                <p className="text-sm leading-relaxed max-w-xl text-[var(--text-dim)]">
                                     {e.desc}
                                 </p>
                             </div>
@@ -497,19 +485,19 @@ function ValuesSection() {
         {
             symbol: "01",
             title: "No yes-man mentality",
-            body: "I prioritise what is functional and efficient over what is trendy. Good engineering doesn't bend to hype.",
+            body: "I prioritise what is functional and efficient over what is trendy. Good engineering does not bend to hype.",
             accent: "#00CFFF",
         },
         {
             symbol: "02",
             title: "Layman clarity over jargon",
-            body: "I communicate in plain language. If you can't explain it simply, you don't understand it well enough.",
+            body: "I communicate in plain language. If you cannot explain it simply, you do not understand it well enough.",
             accent: "#aa3bff",
         },
         {
             symbol: "03",
             title: "Meticulous documentation",
-            body: "Code is read more than it's written. Documentation is not optional — it's part of the deliverable.",
+            body: "Code is read more than it is written. Documentation is not optional. It is part of the deliverable.",
             accent: "#2EF09A",
         },
         {
@@ -523,35 +511,31 @@ function ValuesSection() {
     return (
         <section>
             <FadeSection>
-                <SectionHeading eyebrow="Principles" title="What I stand by." accent="#00CFFF" />
+                <SectionHeading eyebrow="Principles" title="What I" accentText="stand by." />
             </FadeSection>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {values.map((v, i) => (
                     <FadeSection key={i} delay={i * 0.08}>
                         <div
-                            className="flex flex-col gap-4 rounded-2xl border p-6 sm:p-7 h-full"
-                            style={{
-                                borderColor: "rgba(255,255,255,0.07)",
-                                background: "rgba(255,255,255,0.02)",
-                            }}
+                            className="flex flex-col gap-4 rounded-2xl border border-[rgba(255,255,255,0.07)] bg-[rgba(255,255,255,0.02)] p-6 sm:p-7 h-full"
                         >
                             <div className="flex items-center justify-between">
                                 <span
-                                    className="text-3xl font-black font-mono leading-none"
-                                    style={{ color: v.accent, opacity: 0.35, fontFamily: "'Syne', sans-serif" }}
+                                    className="text-3xl font-black font-mono leading-none opacity-35"
+                                    style={{ color: v.accent, fontFamily: "var(--heading)" }}
                                 >
                                     {v.symbol}
                                 </span>
-                                <div className="w-6 h-px" style={{ background: v.accent, opacity: 0.4 }} />
+                                <div className="w-6 h-px opacity-40" style={{ background: v.accent }} />
                             </div>
                             <h3
-                                className="text-lg font-bold leading-snug"
-                                style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                                className="text-lg font-bold leading-snug text-[var(--text-primary)]"
+                                style={{ fontFamily: "var(--heading)" }}
                             >
                                 {v.title}
                             </h3>
-                            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                            <p className="text-sm leading-relaxed text-[var(--text-dim)]">
                                 {v.body}
                             </p>
                         </div>
@@ -563,12 +547,12 @@ function ValuesSection() {
 }
 
 /* ══════════════════════════════════════════
-   NOW — CURRENTLY WORKING ON
+   NOW
 ══════════════════════════════════════════ */
 function NowSection() {
     const items = [
-        { label: "Deep in SEO remediation for HouseToHome", accent: "#00CFFF" },
-        { label: "Building out Ctrl Alt Shamil blog — Developer's Nexus series", accent: "#aa3bff" },
+        { label: "Deep in SEO remediation for House To Home", accent: "#00CFFF" },
+        { label: "Building out the CtrlAltShamil blog", accent: "#aa3bff" },
         { label: "Exploring international client work and remote contracts", accent: "#2EF09A" },
         { label: "Fourth iteration of this portfolio", accent: "#F0C22E" },
     ];
@@ -577,33 +561,30 @@ function NowSection() {
         <FadeSection>
             <div
                 className="rounded-2xl border p-7 sm:p-10"
-                style={{
-                    borderColor: "rgba(0,207,255,0.15)",
-                    background: "rgba(0,207,255,0.03)",
-                }}
+                style={{ borderColor: "rgba(0,207,255,0.15)", background: "rgba(0,207,255,0.03)" }}
             >
                 <div className="flex items-center gap-3 mb-6">
-                    <span
-                        className="w-2 h-2 rounded-full animate-pulse"
-                        style={{ background: "#00CFFF", boxShadow: "0 0 8px #00CFFF" }}
-                    />
-                    <span className="text-xs font-mono tracking-[0.22em] uppercase" style={{ color: "#00CFFF" }}>
-                        Currently — Now
+                    <span className="relative flex h-2 w-2" aria-hidden="true">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--cyan)] opacity-60" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--cyan)] shadow-[0_0_8px_#00CFFF]" />
+                    </span>
+                    <span className="text-xs font-mono tracking-[0.22em] uppercase text-[var(--cyan)]">
+                        Right Now
                     </span>
                 </div>
 
                 <h2
-                    className="text-2xl sm:text-3xl font-black tracking-tight mb-7"
-                    style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                    className="text-2xl sm:text-3xl font-black tracking-tight mb-7 text-[var(--text-primary)]"
+                    style={{ fontFamily: "var(--heading)" }}
                 >
-                    What I'm working on right now.
+                    What I am working on.
                 </h2>
 
                 <ul className="flex flex-col gap-3">
                     {items.map((item, i) => (
                         <li key={i} className="flex items-start gap-3">
                             <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: item.accent }} />
-                            <span className="text-sm sm:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.70)" }}>
+                            <span className="text-sm sm:text-base leading-relaxed text-[var(--text-dim)]">
                                 {item.label}
                             </span>
                         </li>
@@ -618,21 +599,18 @@ function NowSection() {
    OTHER WORLD — LIGHTBOX
 ══════════════════════════════════════════ */
 function InterestLightbox({ item, onClose }) {
-    /* Close on ESC key */
     useEffect(() => {
         const handler = (e) => { if (e.key === "Escape") onClose(); };
         window.addEventListener("keydown", handler);
         return () => window.removeEventListener("keydown", handler);
     }, [onClose]);
 
-    /* Lock body scroll while open */
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => { document.body.style.overflow = ""; };
     }, []);
 
     return (
-        /* Backdrop */
         <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
             style={{ background: "rgba(8,8,16,0.85)", backdropFilter: "blur(10px)" }}
@@ -641,7 +619,6 @@ function InterestLightbox({ item, onClose }) {
             role="dialog"
             aria-label={`About ${item.title}`}
         >
-            {/* Panel */}
             <div
                 className="relative w-full max-w-md rounded-2xl p-7 sm:p-9 flex flex-col gap-5"
                 style={{
@@ -651,27 +628,16 @@ function InterestLightbox({ item, onClose }) {
                 }}
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Decorative top accent */}
                 <div
                     className="absolute inset-x-0 top-0 h-px rounded-t-2xl"
                     style={{ background: "linear-gradient(to right, transparent, #aa3bff80, transparent)" }}
                     aria-hidden="true"
                 />
 
-                {/* Ambient glow */}
-                <div
-                    className="pointer-events-none absolute top-0 right-0 w-48 h-48 opacity-[0.07] blur-2xl"
-                    style={{ background: "radial-gradient(ellipse, #aa3bff 0%, transparent 70%)" }}
-                    aria-hidden="true"
-                />
-
-                {/* Close button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-150"
-                    style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.4)" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(170,59,255,0.2)"; e.currentTarget.style.color = "#aa3bff"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
+                    className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-[#505070] hover:text-[#aa3bff] hover:bg-[rgba(170,59,255,0.2)] transition-colors duration-150"
+                    style={{ background: "rgba(255,255,255,0.05)" }}
                     aria-label="Close"
                 >
                     <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
@@ -679,51 +645,33 @@ function InterestLightbox({ item, onClose }) {
                     </svg>
                 </button>
 
-                {/* Type label */}
                 <span
-                    className="text-[9px] font-mono tracking-[0.3em] uppercase w-fit px-2.5 py-1 rounded-full"
-                    style={{
-                        color: "#aa3bff",
-                        background: "rgba(170,59,255,0.1)",
-                        border: "1px solid rgba(170,59,255,0.2)",
-                    }}
+                    className="text-[9px] font-mono tracking-[0.3em] uppercase w-fit px-2.5 py-1 rounded-full text-[#aa3bff] bg-[rgba(170,59,255,0.1)] border border-[rgba(170,59,255,0.2)]"
                 >
                     {item.type}
                 </span>
 
-                {/* Title */}
                 <h3
-                    className="text-2xl sm:text-3xl font-black tracking-tight leading-tight pr-6"
-                    style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                    className="text-2xl sm:text-3xl font-black tracking-tight leading-tight pr-6 text-[var(--text-primary)]"
+                    style={{ fontFamily: "var(--heading)" }}
                 >
                     {item.title}
                 </h3>
 
-                {/* Trait tags */}
                 <div className="flex flex-wrap gap-2">
                     {item.traits.map((trait) => (
                         <span
                             key={trait}
-                            className="text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full"
-                            style={{
-                                color: "rgba(170,59,255,0.8)",
-                                background: "rgba(170,59,255,0.07)",
-                                border: "1px solid rgba(170,59,255,0.15)",
-                            }}
+                            className="text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full text-[rgba(170,59,255,0.8)] bg-[rgba(170,59,255,0.07)] border border-[rgba(170,59,255,0.15)]"
                         >
                             {trait}
                         </span>
                     ))}
                 </div>
 
-                {/* Divider accent */}
-                <div className="h-px w-full" style={{ background: "rgba(170,59,255,0.15)" }} aria-hidden="true" />
+                <div className="h-px w-full bg-[rgba(170,59,255,0.15)]" aria-hidden="true" />
 
-                {/* Personal description */}
-                <p
-                    className="text-sm sm:text-base leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.70)" }}
-                >
+                <p className="text-sm sm:text-base leading-relaxed text-[var(--text-dim)]">
                     {item.description}
                 </p>
             </div>
@@ -743,55 +691,54 @@ function OtherWorldSection() {
             type: "Manga",
             note: "Perseverance, Trauma, Will",
             traits: ["Perseverance", "Trauma", "Will"],
-            description: "Berserk shaped how I think about endurance — Guts taught me that strength isn't the absence of suffering, it's continuing to move forward despite carrying wounds that never fully heal.",
+            description: "Berserk shaped how I think about endurance. Guts taught me that strength is not the absence of suffering. It is continuing to move forward despite carrying wounds that never fully heal.",
         },
         {
             title: "Batman",
             type: "Hero",
             note: "Morals, Character Development, Growth",
             traits: ["Morals", "Character Development", "Growth"],
-            description: "Batman shaped how I think about discipline and integrity — the idea that who you are when no one's watching defines you more than any achievement ever could.",
+            description: "Batman shaped how I think about discipline and integrity. The idea that who you are when no one is watching defines you more than any achievement ever could.",
         },
         {
             title: "Supernatural",
             type: "Series",
             note: "Character journey construction",
             traits: ["Loyalty", "Sacrifice", "Identity"],
-            description: "Supernatural showed me that loyalty and showing up for the people you care about — even when it costs you everything — is the most quietly human thing there is.",
+            description: "Supernatural showed me that loyalty and showing up for the people you care about, even when it costs you everything, is the most quietly human thing there is.",
         },
         {
             title: "The Elder Scrolls",
             type: "Game",
             note: "Agency, Lore, Morality",
             traits: ["Agency", "Lore", "Morality"],
-            description: "The Elder Scrolls taught me that the best systems are the ones deep enough to lose yourself in — every choice carries weight, and the world reacts to who you decide to be.",
+            description: "The Elder Scrolls taught me that the best systems are the ones deep enough to lose yourself in. Every choice carries weight and the world reacts to who you decide to be.",
         },
         {
             title: "Fantastic Mr Fox",
             type: "Animation",
             note: "Selfless, Purpose, Identity",
             traits: ["Selflessness", "Purpose", "Identity"],
-            description: "Fantastic Mr Fox reminded me that knowing who you are — and being willing to change for the people you love — is a kind of quiet courage most people overlook.",
+            description: "Fantastic Mr Fox reminded me that knowing who you are and being willing to change for the people you love is a kind of quiet courage most people overlook.",
         },
         {
             title: "The Hitchhiker's Guide",
             type: "Reading",
             note: "Absurdity, Perspective, Resilience",
             traits: ["Absurdity", "Perspective", "Resilience"],
-            description: "This book reshaped how I handle uncertainty — when the universe is unpredictable and absurd, the only sane response is curiosity and a good sense of humour.",
+            description: "This book reshaped how I handle uncertainty. When the universe is unpredictable and absurd, the only sane response is curiosity and a good sense of humour.",
         },
         {
             title: "Eureka 7",
             type: "Anime",
             note: "Connection, Discovery, Maturity",
             traits: ["Connection", "Discovery", "Maturity"],
-            description: "Eureka 7 shaped how I think about growth — real maturity comes from learning to understand others so deeply that their world genuinely becomes part of yours.",
+            description: "Eureka 7 shaped how I think about growth. Real maturity comes from learning to understand others so deeply that their world genuinely becomes part of yours.",
         },
     ];
 
     return (
         <>
-            {/* Lightbox */}
             {selected !== null && (
                 <InterestLightbox
                     item={interests[selected]}
@@ -806,93 +753,58 @@ function OtherWorldSection() {
                     border: "1px solid rgba(170,59,255,0.15)",
                 }}
             >
-                {/* Purple world ambiance */}
                 <div
                     className="pointer-events-none absolute top-0 right-0 w-[500px] h-[400px] opacity-[0.08] blur-3xl"
                     style={{ background: "radial-gradient(ellipse, #aa3bff 0%, transparent 70%)" }}
-                    aria-hidden="true"
-                />
-                <div
-                    className="pointer-events-none absolute bottom-0 left-0 w-[300px] h-[300px] opacity-[0.05] blur-3xl"
-                    style={{ background: "radial-gradient(ellipse, #aa3bff 0%, transparent 70%)" }}
-                    aria-hidden="true"
-                />
-
-                {/* Noise texture overlay */}
-                <div
-                    className="pointer-events-none absolute inset-0 opacity-[0.015]"
-                    style={{
-                        backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
-                    }}
                     aria-hidden="true"
                 />
 
                 <div className="relative">
                     <FadeSection>
                         <div className="flex items-center gap-4 mb-3">
-                            <div className="h-px w-12" style={{ background: "#aa3bff" }} />
-                            <span className="text-[10px] font-mono tracking-[0.25em] uppercase" style={{ color: "#aa3bff" }}>
+                            <div className="h-px w-12 bg-[#aa3bff]" />
+                            <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#aa3bff]">
                                 The Other World
                             </span>
                         </div>
                         <h2
-                            className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.05] mb-6"
-                            style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                            className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.05] mb-6 text-[var(--text-primary)]"
+                            style={{ fontFamily: "var(--heading)" }}
                         >
                             Far from the IDE,{" "}
-                            <span style={{ color: "#aa3bff" }}>deep in the lore.</span>
+                            <span className="text-[#aa3bff]">deep in the lore.</span>
                         </h2>
-                        <p
-                            className="text-base sm:text-lg leading-relaxed max-w-2xl mb-3"
-                            style={{ color: "rgba(255,255,255,0.60)" }}
-                        >
+                        <p className="text-base sm:text-lg leading-relaxed max-w-2xl mb-3 text-[var(--text-dim)]">
                             The same analytical skills I use to debug a script are the ones I use to deconstruct a story.
-                            Understanding the internal logic of a massive narrative arc — how small details have massive impact
-                            on the final outcome — isn't a distraction. It's the fuel for my problem-solving mindset.
+                            Understanding the internal logic of a massive narrative arc and how small details have massive impact
+                            on the final outcome is not a distraction. It is the fuel for my problem-solving mindset.
                         </p>
-                        <p
-                            className="text-xs font-mono tracking-[0.15em] mb-10"
-                            style={{ color: "rgba(170,59,255,0.5)" }}
-                        >
-                            ↗ tap any card to learn more
+                        <p className="text-xs font-mono tracking-[0.15em] mb-10 text-[rgba(170,59,255,0.5)]">
+                            tap any card to learn more
                         </p>
                     </FadeSection>
 
-                    {/* Interest cards */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                         {interests.map((item, i) => (
                             <FadeSection key={i} delay={i * 0.07}>
                                 <button
                                     onClick={() => setSelected(i)}
-                                    className="w-full text-left rounded-xl border p-4 flex flex-col gap-1.5 transition-all duration-200 group"
+                                    className="w-full text-left rounded-xl border p-4 flex flex-col gap-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(170,59,255,0.45)] hover:bg-[rgba(170,59,255,0.10)]"
                                     style={{
                                         borderColor: "rgba(170,59,255,0.2)",
                                         background: "rgba(170,59,255,0.05)",
                                     }}
-                                    onMouseEnter={e => {
-                                        e.currentTarget.style.borderColor = "rgba(170,59,255,0.45)";
-                                        e.currentTarget.style.background = "rgba(170,59,255,0.10)";
-                                        e.currentTarget.style.transform = "translateY(-2px)";
-                                    }}
-                                    onMouseLeave={e => {
-                                        e.currentTarget.style.borderColor = "rgba(170,59,255,0.2)";
-                                        e.currentTarget.style.background = "rgba(170,59,255,0.05)";
-                                        e.currentTarget.style.transform = "translateY(0)";
-                                    }}
                                 >
-                                    <span
-                                        className="text-[9px] font-mono tracking-widest uppercase"
-                                        style={{ color: "rgba(170,59,255,0.7)" }}
-                                    >
+                                    <span className="text-[9px] font-mono tracking-widest uppercase text-[rgba(170,59,255,0.7)]">
                                         {item.type}
                                     </span>
                                     <span
-                                        className="text-sm font-bold leading-snug"
-                                        style={{ color: "#F2F2FA", fontFamily: "'Syne', sans-serif" }}
+                                        className="text-sm font-bold leading-snug text-[var(--text-primary)]"
+                                        style={{ fontFamily: "var(--heading)" }}
                                     >
                                         {item.title}
                                     </span>
-                                    <span className="text-[11px] leading-snug" style={{ color: "rgba(255,255,255,0.40)" }}>
+                                    <span className="text-[11px] leading-snug text-[#505070]">
                                         {item.note}
                                     </span>
                                 </button>
@@ -901,13 +813,10 @@ function OtherWorldSection() {
                     </div>
 
                     <FadeSection delay={0.3}>
-                        <p
-                            className="mt-8 text-sm leading-relaxed max-w-2xl"
-                            style={{ color: "rgba(255,255,255,0.45)" }}
-                        >
+                        <p className="mt-8 text-sm leading-relaxed max-w-2xl text-[var(--text-dim)]">
                             There is something profoundly satisfying about understanding a system too large for any one person
-                            to hold in their head — and finding the patterns anyway. That is engineering. That is storytelling.
-                            For me, they are the same skill.
+                            to hold in their head and finding the patterns anyway. That is engineering. That is storytelling.
+                            For me they are the same skill.
                         </p>
                     </FadeSection>
                 </div>
@@ -920,42 +829,24 @@ function OtherWorldSection() {
    PAGE
 ══════════════════════════════════════════ */
 export default function About() {
-    return (
-        <main id="main-content" className="relative w-full bg-[#080810]" aria-labelledby="about-heading">
+    usePageSEO();
 
-            {/* ── Cinematic Hero ── */}
+    return (
+        <main id="main-content" className="relative w-full bg-[var(--surface)]" aria-labelledby="about-heading">
             <HeroSection />
 
             <div className="w-full px-[var(--px)] sm:px-[var(--px-sm)] lg:px-[var(--px-lg)] xl:px-[var(--px-xl)] py-16 sm:py-24 flex flex-col gap-0">
-
-                {/* ── Surgical Precision Manifesto ── */}
                 <ManifestoSection />
-
                 <Divider />
-
-                {/* ── Technical World ── */}
                 <TechnicalSection />
-
                 <Divider />
-
-                {/* ── Career Timeline ── */}
                 <TimelineSection />
-
                 <Divider />
-
-                {/* ── Values ── */}
                 <ValuesSection />
-
                 <Divider />
-
-                {/* ── Currently / Now ── */}
                 <NowSection />
-
                 <Divider />
-
-                {/* ── Other World — hobbies ── */}
                 <OtherWorldSection />
-
             </div>
         </main>
     );

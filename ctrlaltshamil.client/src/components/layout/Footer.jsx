@@ -144,7 +144,7 @@ export default function Footer() {
                         </Link>
 
                         <p className="text-[#606080] text-sm leading-relaxed max-w-sm font-mono">
-                            Crafting fast, accessible, and visually sharp digital experiences — one commit at a time.
+                            Crafting fast, accessible and visually sharp digital experiences, one commit at a time.
                         </p>
 
                         {/* Social icons */}

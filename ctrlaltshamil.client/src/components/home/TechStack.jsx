@@ -41,10 +41,8 @@ const ICONS = {
             <path d="M12 2C6.477 2 2 4.477 2 7.5v9C2 19.523 6.477 22 12 22s10-2.477 10-5.5v-9C22 4.477 17.523 2 12 2zm8 14.5c0 1.93-3.582 3.5-8 3.5s-8-1.57-8-3.5V14.4c1.767 1.271 4.745 2.1 8 2.1s6.233-.829 8-2.1v2.1zm0-5c0 1.93-3.582 3.5-8 3.5s-8-1.57-8-3.5V9.4c1.767 1.271 4.745 2.1 8 2.1s6.233-.829 8-2.1V11.5zm-8-4C7.582 7.5 4 5.93 4 4S7.582.5 12 .5 20 2.07 20 4s-3.582 3.5-8 3.5z" />
         </svg>
     ),
-    aws: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7" aria-hidden="true">
-            <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 01-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 01-.287-.375 6.18 6.18 0 01-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.030-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103a6.41 6.41 0 00-.863.28 2.295 2.295 0 01-.28.104.488.488 0 01-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 01.224-.168c.28-.144.616-.264 1.010-.36a4.84 4.84 0 011.244-.151c.95 0 1.644.216 2.091.647.439.431.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 00-.735-.136 6.02 6.02 0 00-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 01-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 01.32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 01.311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 01-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 01-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.224a.563.563 0 01-.048-.223v-.407c0-.168.064-.248.183-.248.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 00.415-.758.777.777 0 00-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 01-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.814-.415.304-.096.623-.144.95-.144.167 0 .343.008.51.032.176.023.336.055.487.095.144.04.28.08.407.128.128.048.224.096.288.144a.585.585 0 01.199.167.402.402 0 01.056.224v.375c0 .168-.064.256-.184.256a.83.83 0 01-.303-.096 3.652 3.652 0 00-1.524-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.735.167-1.142.167z" />
-        </svg>
+    render: (
+        <img src="https://img.logokit.com/render.com?token=pk_fr11713f8e80329f613e45" alt="" className="w-7 h-7" aria-hidden="true" />
     ),
     tailwind: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7" aria-hidden="true">
@@ -70,19 +68,71 @@ const ICONS = {
     ),
 };
 
+/* ── Stack data with layman blurbs ──────────────────────────────── */
 const STACK = [
-    { id: "csharp", name: "C#", color: "#B87FFF" },
-    { id: "aspnet", name: "ASP.NET", color: "#7B5CE8" },
-    { id: "react", name: "React", color: "#61DAFB" },
-    { id: "javascript", name: "JavaScript", color: "#F7DF1E" },
-    { id: "python", name: "Python", color: "#3776AB" },
-    { id: "sqlserver", name: "SQL Server", color: "#CC2927" },
-    { id: "aws", name: "AWS", color: "#FF9900" },
-    { id: "tailwind", name: "Tailwind", color: "#38BDF8" },
-    { id: "git", name: "Git", color: "#F05032" },
-    { id: "bootstrap", name: "Bootstrap", color: "#A066FF" },
+    {
+        id: "csharp",
+        name: "C#",
+        color: "#B87FFF",
+        blurb: "A powerful programming language from Microsoft. I use it to write the server-side logic that powers web apps, handles data and runs business rules behind the scenes.",
+    },
+    {
+        id: "aspnet",
+        name: "ASP.NET",
+        color: "#7B5CE8",
+        blurb: "The framework I build web applications on top of. Think of it as the engine room of a website. It handles everything from user logins to serving up pages at speed.",
+    },
+    {
+        id: "react",
+        name: "React",
+        color: "#61DAFB",
+        blurb: "A front-end library for building interactive interfaces. I use it to create the parts of a website you actually see and click on. It keeps things fast and responsive.",
+    },
+    {
+        id: "javascript",
+        name: "JavaScript",
+        color: "#F7DF1E",
+        blurb: "The language of the web. Every time something moves, updates or reacts to your click on a website, JavaScript is usually doing the heavy lifting.",
+    },
+    {
+        id: "python",
+        name: "Python",
+        color: "#3776AB",
+        blurb: "A versatile language I reach for when doing data work, automation or quick scripting. Great for pulling insights out of large datasets and automating repetitive tasks.",
+    },
+    {
+        id: "sqlserver",
+        name: "SQL Server",
+        color: "#CC2927",
+        blurb: "A database system that stores and organises all your data. I use it to build the structured storage layer that sits behind every application.",
+    },
+    {
+        id: "render",
+        name: "Render",
+        color: "#46E3B7",
+        blurb: "A modern cloud platform I use to deploy web apps and APIs. It handles hosting, SSL and auto-deploys from Git so I can focus on building rather than managing infrastructure.",
+    },
+    {
+        id: "tailwind",
+        name: "Tailwind",
+        color: "#38BDF8",
+        blurb: "A utility-first CSS framework that lets me style interfaces quickly and consistently. It keeps the design system tight without writing mountains of custom CSS.",
+    },
+    {
+        id: "git",
+        name: "Git",
+        color: "#F05032",
+        blurb: "Version control that tracks every change to the code. It means I can experiment freely, roll back mistakes and collaborate with others without things getting messy.",
+    },
+    {
+        id: "bootstrap",
+        name: "Bootstrap",
+        color: "#A066FF",
+        blurb: "A popular UI toolkit with ready-made components. I use it on projects where speed to launch matters and a solid responsive layout is needed out of the box.",
+    },
 ];
 
+/* ── Intersection helper ────────────────────────────────────────── */
 function useFadeIn(threshold = 0.15) {
     const ref = useRef(null);
     const [visible, setVisible] = useState(false);
@@ -90,7 +140,12 @@ function useFadeIn(threshold = 0.15) {
         const el = ref.current;
         if (!el) return;
         const obs = new IntersectionObserver(
-            ([e]) => { if (e.isIntersecting) setVisible(true); },
+            ([e]) => {
+                if (e.isIntersecting) {
+                    setVisible(true);
+                    obs.disconnect();
+                }
+            },
             { threshold }
         );
         obs.observe(el);
@@ -102,13 +157,16 @@ function useFadeIn(threshold = 0.15) {
 export default function TechStack() {
     const { ref: headRef, visible: headVisible } = useFadeIn(0.2);
     const { ref: gridRef, visible: gridVisible } = useFadeIn(0.1);
+    const [activeId, setActiveId] = useState(null);
+
+    const toggle = (id) => setActiveId((prev) => (prev === id ? null : id));
 
     return (
         <section
-            className="relative w-full bg-[#080810] py-20 sm:py-28 border-t border-[#1A1A30]"
+            className="relative w-full bg-[var(--surface)] py-20 sm:py-28 border-t border-[var(--border-subtle)]"
             aria-labelledby="tech-stack-heading"
         >
-            <div className="relative w-full px-4 sm:px-8 lg:px-16 xl:px-24">
+            <div className="relative w-full px-[var(--px)] sm:px-[var(--px-sm)] lg:px-[var(--px-lg)] xl:px-[var(--px-xl)]">
 
                 {/* Header */}
                 <div
@@ -120,16 +178,16 @@ export default function TechStack() {
                         transition: "opacity 0.6s ease, transform 0.6s ease",
                     }}
                 >
-                    <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-[#00CFFF] mb-4">
+                    <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-[var(--cyan)] mb-4">
                         Tech Stack
                     </span>
                     <h2
                         id="tech-stack-heading"
-                        className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#F2F2FA] tracking-tight leading-tight"
-                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight"
+                        style={{ fontFamily: "var(--heading)" }}
                     >
                         Tools I{" "}
-                        <span className="text-[#00CFFF]">build with.</span>
+                        <span className="text-[var(--cyan)]">build with.</span>
                     </h2>
                 </div>
 
@@ -138,32 +196,64 @@ export default function TechStack() {
                     ref={gridRef}
                     className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4"
                 >
-                    {STACK.map(({ id, name, color }, i) => (
-                        <div
-                            key={id}
-                            className="group flex flex-col items-center justify-center gap-3 p-5 sm:p-6 rounded-2xl border border-[#1A1A30] bg-[#0B0B18] hover:border-[#2A2A45] hover:bg-[#0F0F20] transition-all duration-300 cursor-default"
-                            style={{
-                                opacity: gridVisible ? 1 : 0,
-                                transform: gridVisible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.96)",
-                                transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 0.05}s, background 0.3s, border-color 0.3s`,
-                            }}
-                        >
-                            {/* Icon container */}
-                            <div
-                                className="w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
-                                style={{ color, filter: "drop-shadow(0 0 8px currentColor)" }}
-                                aria-hidden="true"
+                    {STACK.map(({ id, name, color, blurb }, i) => {
+                        const isActive = activeId === id;
+
+                        return (
+                            <button
+                                key={id}
+                                type="button"
+                                onClick={() => toggle(id)}
+                                className={`group relative flex flex-col items-center justify-center gap-3 p-5 sm:p-6 rounded-2xl border transition-all duration-300 cursor-pointer text-center ${isActive
+                                        ? "bg-[#0F0F20] border-[#2A2A45]"
+                                        : "bg-[var(--surface-raised)] border-[var(--border-subtle)] hover:border-[#2A2A45] hover:bg-[#0F0F20]"
+                                    }`}
+                                style={{
+                                    opacity: gridVisible ? 1 : 0,
+                                    transform: gridVisible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.96)",
+                                    transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 0.05}s, background 0.3s, border-color 0.3s`,
+                                }}
+                                aria-expanded={isActive}
+                                aria-label={`${name}: click for details`}
                             >
-                                {ICONS[id]}
-                            </div>
-                            {/* Name */}
-                            <span
-                                className="text-xs sm:text-sm font-mono text-[#7070A0] group-hover:text-[#F2F2FA] tracking-wide transition-colors duration-200 text-center"
-                            >
-                                {name}
-                            </span>
-                        </div>
-                    ))}
+                                {/* Icon */}
+                                <div
+                                    className="w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
+                                    style={{ color, filter: "drop-shadow(0 0 8px currentColor)" }}
+                                    aria-hidden="true"
+                                >
+                                    {ICONS[id]}
+                                </div>
+
+                                {/* Name */}
+                                <span className="text-xs sm:text-sm font-mono text-[var(--text-dim)] group-hover:text-[var(--text-primary)] tracking-wide transition-colors duration-200">
+                                    {name}
+                                </span>
+
+                                {/* Expandable blurb */}
+                                <div
+                                    className="overflow-hidden w-full"
+                                    style={{
+                                        display: "grid",
+                                        gridTemplateRows: isActive ? "1fr" : "0fr",
+                                        transition: "grid-template-rows 0.35s cubic-bezier(0.16,1,0.3,1)",
+                                    }}
+                                >
+                                    <div className="overflow-hidden">
+                                        <p
+                                            className="pt-3 text-[11px] sm:text-xs leading-relaxed text-[var(--text-dim)] border-t border-[var(--border-subtle)] mt-2"
+                                            style={{
+                                                opacity: isActive ? 1 : 0,
+                                                transition: "opacity 0.3s ease 0.1s",
+                                            }}
+                                        >
+                                            {blurb}
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </section>

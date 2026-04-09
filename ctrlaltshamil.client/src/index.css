@@ -15,11 +15,19 @@
     --heading: 'Space Grotesk', system-ui, sans-serif;
     --mono: ui-monospace, Consolas, monospace;
     /* Consistent spacing scale */
-    --px: 1rem; /* mobile  — 16px */
-    --px-sm: 2rem; /* ≥640px  — 32px */
-    --px-lg: 4rem; /* ≥1024px — 64px */
-    --px-xl: 6rem; /* ≥1280px — 96px */
-
+    --px: 1rem; /* mobile   16px */
+    --px-sm: 2rem; /* >=640px  32px */
+    --px-lg: 4rem; /* >=1024px 64px */
+    --px-xl: 6rem; /* >=1280px 96px */
+    /* Shared colours */
+    --cyan: #00CFFF;
+    --green: #00FF94;
+    --surface: #080810;
+    --surface-raised: #0B0B18;
+    --text-primary: #F2F2FA;
+    --text-muted: #A0A0C0;
+    --text-dim: #7070A0;
+    --border-subtle: #1A1A30;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -28,7 +36,8 @@
 
 body {
     margin: 0;
-    background: #080810; /* matches your dark theme */
+    background: var(--surface);
+    overflow-x: hidden;
 }
 
 #root {
@@ -36,4 +45,60 @@ body {
     min-height: 100svh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* ── Hero utilities ──────────────────────────────────────────────── */
+
+/* Primary CTA glow + hover */
+.hero-cta-primary {
+    box-shadow: 0 0 28px rgba(0, 207, 255, 0.35);
+}
+
+    .hero-cta-primary:hover {
+        background: #33D9FF;
+        box-shadow: 0 0 48px rgba(0, 207, 255, 0.55);
+    }
+
+/* Scroll indicator pulse */
+.scroll-pulse {
+    animation: scroll-fade 2.4s ease-in-out infinite;
+}
+
+@keyframes scroll-fade {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scaleY(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scaleY(1.15);
+    }
+}
+
+/* Noise grain overlay */
+.hero-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+}
+
+/* Stat cell vertical dividers (non-first in each row) */
+.stat-cell + .stat-cell {
+    border-left: 1px solid var(--border-subtle);
+}
+
+/* On the 2-col mobile grid the 3rd cell (first in second row) should not have a left border */
+@media (max-width: 1023px) {
+    .stat-cell:nth-child(odd) {
+        border-left: none;
+    }
+}
+
+/* Top row border for stats on mobile */
+@media (max-width: 1023px) {
+    .stat-cell:nth-child(n + 3) {
+        border-top: 1px solid var(--border-subtle);
+    }
 }
