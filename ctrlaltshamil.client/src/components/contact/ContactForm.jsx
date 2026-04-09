@@ -395,7 +395,7 @@ export default function ContactForm() {
                         {/* Invisible reCAPTCHA — executes on submit */}
                         <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                                sitekey="6LfmIa8sAAAAAK46wg3-mayBIF2wdjecNHQxChfx"
                             size="invisible"
                         />
 
