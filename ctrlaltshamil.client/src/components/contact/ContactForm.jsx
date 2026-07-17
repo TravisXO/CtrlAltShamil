@@ -395,7 +395,7 @@ export default function ContactForm() {
                         {/* Invisible reCAPTCHA — executes on submit */}
                         <ReCAPTCHA
                             ref={recaptchaRef}
-                                sitekey="6LfmIa8sAAAAAK46wg3-mayBIF2wdjecNHQxChfx"
+                            sitekey="6LcxsVctAAAAANe2yhsyFXyoFrjPTKj9fvh8g4M6"
                             size="invisible"
                         />
 
