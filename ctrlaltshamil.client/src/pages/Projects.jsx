@@ -266,6 +266,21 @@ function ProjectCard({ project, index, visible, onImageClick }) {
 /* ── Data ───────────────────────────────────────────────────────── */
 export const PROJECTS = [
     {
+        id: "summit-stone-properties",
+        title: "Summit & Stone Properties — Full-Stack Real Estate Platform",
+        tags: ["SEO", "Full-Stack"],
+        coverType: "webdev",
+        coverImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=70",
+        summary:
+            "A production real estate platform for a Lusaka, Zambia agency — public property search, a JSON-driven blog engine, and an internal admin system, built as a React SPA over an ASP.NET Core API with a custom middleware layer that makes the client-rendered site fully crawlable.",
+        tech: ["React 19", "Vite", "ASP.NET Core 8", "EF Core", "PostgreSQL", "Cloudinary", "Leaflet"],
+        status: ["Case Study Coming Soon"],
+        links: [
+            { label: "Live Site", href: "#", primary: true },
+        ],
+        filter: ["All", "SEO", "Full-Stack"],
+    },
+    {
         id: "classic-zambia",
         title: "Classic Zambia Safaris — SEO Case Study",
         tags: ["SEO"],

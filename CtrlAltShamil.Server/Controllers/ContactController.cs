@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 [ApiController]
@@ -31,28 +32,34 @@ public class ContactController : ControllerBase
         if (!doc.RootElement.GetProperty("success").GetBoolean())
             return BadRequest(new { error = "reCAPTCHA verification failed." });
 
-        // 2. Send email via SendGrid
-        var apiKey = _config["SendGrid:ApiKey"];
-        var fromEmail = _config["SendGrid:FromEmail"];
-        var toEmail = _config["SendGrid:ToEmail"];
+        // 2. Send email via Resend
+        var apiKey = _config["Resend:ApiKey"];
+        var fromEmail = _config["Resend:FromEmail"];
+        var toEmail = _config["Resend:ToEmail"];
 
-        var client = new SendGridClient(apiKey);
-        var msg = new SendGridMessage
+        var name = WebUtility.HtmlEncode(body.Name);
+        var email = WebUtility.HtmlEncode(body.Email);
+        var message = WebUtility.HtmlEncode(body.Message);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api.resend.com/emails");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+        request.Content = JsonContent.Create(new
         {
-            From = new EmailAddress(fromEmail, "Portfolio Contact"),
-            Subject = $"New message from {body.Name}",
-            PlainTextContent = $"Name: {body.Name}\nEmail: {body.Email}\n\n{body.Message}",
-            HtmlContent = $@"
+            from = $"Portfolio Contact <{fromEmail}>",
+            to = new[] { toEmail },
+            reply_to = body.Email,
+            subject = $"New message from {body.Name}",
+            text = $"Name: {body.Name}\nEmail: {body.Email}\n\n{body.Message}",
+            html = $@"
                 <h3>New Contact Form Submission</h3>
-                <p><strong>Name:</strong> {body.Name}</p>
-                <p><strong>Email:</strong> {body.Email}</p>
-                <p><strong>Message:</strong><br/>{body.Message}</p>"
-        };
-        msg.AddTo(new EmailAddress(toEmail));
+                <p><strong>Name:</strong> {name}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Message:</strong><br/>{message}</p>"
+        });
 
-        var response = await client.SendEmailAsync(msg);
+        var response = await _http.SendAsync(request);
 
-        if ((int)response.StatusCode >= 400)
+        if (!response.IsSuccessStatusCode)
             return StatusCode(500, new { error = "Failed to send email." });
 
         return Ok(new { message = "Message sent successfully." });
