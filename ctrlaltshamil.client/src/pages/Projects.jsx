@@ -28,7 +28,7 @@ function usePageSEO() {
         setMeta("description", "SEO case studies and full-stack web development projects by Alexander Shamil Mondoka. Real traffic data, verified rankings and production applications built with ASP.NET and React.");
         setOG("og:title", "Projects | CtrlAltShamil");
         setOG("og:description", "SEO case studies with verified data and full-stack web applications. Built by a developer and SEO specialist in Lusaka, Zambia.");
-        setOG("og:url", "https://ctrlaltshamil.com/projects");
+        setOG("og:url", "https://www.ctrlaltshamil.com/projects");
 
         return () => { document.title = prev; };
     }, []);

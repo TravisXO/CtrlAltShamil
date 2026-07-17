@@ -31,7 +31,7 @@ function usePageSEO() {
         setMeta("description", "Learn about Alexander Shamil Mondoka (CtrlAltShamil). Software Engineering graduate, full-stack developer and technical SEO specialist based in Lusaka, Zambia. Building web apps with ASP.NET and React for clients worldwide.");
         setOG("og:title", "About Alexander Shamil Mondoka | CtrlAltShamil");
         setOG("og:description", "Software Engineering graduate, full-stack developer and technical SEO specialist in Lusaka, Zambia. Available for remote work worldwide.");
-        setOG("og:url", "https://ctrlaltshamil.com/about");
+        setOG("og:url", "https://www.ctrlaltshamil.com/about");
 
         return () => { document.title = prev; };
     }, []);

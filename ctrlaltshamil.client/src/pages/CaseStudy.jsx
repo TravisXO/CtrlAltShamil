@@ -23,7 +23,7 @@ function usePageSEO(project) {
         setMeta("description", project.summary);
         setOG("og:title", `${project.title} | CtrlAltShamil`);
         setOG("og:description", project.summary);
-        setOG("og:url", `https://ctrlaltshamil.com/projects/${project.id}`);
+        setOG("og:url", `https://www.ctrlaltshamil.com/projects/${project.id}`);
 
         return () => { document.title = prev; };
     }, [project]);
