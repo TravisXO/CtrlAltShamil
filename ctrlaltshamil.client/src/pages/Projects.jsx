@@ -77,7 +77,7 @@ function RankingBars({ data }) {
     const colours = ["#2EF09A", "#00CFFF", "#7B8EFF", "#A78BFA", "#C4B5FD", "#DDD6FE"];
     return (
         <div className="mt-3">
-            <p className="text-[10px] font-mono text-[#50507A] uppercase tracking-widest mb-2">Keyword ranking distribution</p>
+            <p className="text-[10px] font-mono text-[#50507A] uppercase tracking-widest mb-2">Where these pages rank on Google</p>
             <div className="flex items-end gap-1.5 h-10">
                 {data.map((d, i) => (
                     <div key={d.range} className="flex flex-col items-center gap-1 flex-1">
@@ -175,7 +175,7 @@ function CoverPlaceholder({ type }) {
 }
 
 /* ── Project card ──────────────────────────────────────────────── */
-function ProjectCard({ project, index, visible, onImageClick }) {
+export function ProjectCard({ project, index, visible, onImageClick }) {
     return (
         <article
             className="group flex flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-raised)] overflow-hidden hover:border-[#2A2A45] hover:shadow-[0_0_40px_rgba(0,207,255,0.04)] transition-all duration-500"
@@ -266,13 +266,90 @@ function ProjectCard({ project, index, visible, onImageClick }) {
 /* ── Data ───────────────────────────────────────────────────────── */
 export const PROJECTS = [
     {
+        id: "scandinavian-living-lusaka",
+        title: "Scandinavian Living Lusaka — Boutique Hospitality Website",
+        tags: ["SEO", "Web Dev"],
+        coverType: "webdev",
+        coverImage: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=70",
+        summary:
+            "A boutique serviced-apartment business in Lusaka needed a website that actually matched their brand — calm, clean, Nordic-inspired — instead of a generic template. Built as a fast, modern site that runs alongside their existing booking system, so nothing about how guests already reach them had to change behind the scenes.",
+        tech: ["React 19", "Vite", "Tailwind CSS", "WordPress", "SiteGround"],
+        status: ["Case Study Coming Soon"],
+        links: [
+            { label: "Live Site", href: "https://scandinavianlivinglusaka.com", primary: true },
+        ],
+        filter: ["All", "SEO", "Full-Stack"],
+    },
+    {
+        id: "victors-hill-estates",
+        title: "Victor's Hill Estates — Real Estate Platform Build & SEO",
+        tags: ["SEO", "Full-Stack"],
+        coverType: "webdev",
+        coverImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=70",
+        summary:
+            "A licensed real estate agency in Lusaka needed a brand-new website built from a domain with zero history behind it. 73 days after launch — with no paid ads and no link building — it's already ranking in the top 3 on Google for \"real estate companies in Zambia\" and similar high-intent searches.",
+        tech: ["React 19", "Vite", "ASP.NET Core 8", "Cloudinary", "SendGrid", "Render"],
+        metrics: [
+            { label: "5,830 Google Impressions", accent: "#00CFFF" },
+            { label: "0 → 169 clicks in 73 days", accent: "#00CFFF" },
+            { label: "Top 3 for \"real estate in Zambia\"", accent: "#00CFFF" },
+        ],
+        caseStudy: {
+            impressions: "5,830",
+            before: { traffic: 0, value: "" },
+            after: { traffic: 169, value: "" },
+            trafficLabel: "clicks from Google, in the first 73 days",
+            monthlyGrowth: [
+                { label: "May 2026", value: 53 },
+                { label: "June 2026", value: 78 },
+                { label: "July 2026", value: 108 },
+            ],
+            monthlyGrowthHeadline: "More than doubled — from 53 to 108 times a day showing up in Google search, in under two months, with no paid ads and no link building.",
+            topKeywords: [
+                { query: "real estate companies in zambia", position: 1.4, note: "145 people saw it, 9 clicked" },
+                { query: "real estate lusaka", position: 2.2, note: "83 people saw it, 4 clicked" },
+                { query: "real estate companies in lusaka", position: 2.3, note: "38 people saw it, 2 clicked" },
+                { query: "victors hill estates", position: 2.6, note: "62 people searched the brand by name" },
+                { query: "flats for sale in lusaka", position: 8.2, note: "43 people saw it, 3 clicked" },
+                { query: "cheap houses for sale in lusaka zambia", position: 1.0, note: "1 in 4 people who saw it clicked" },
+            ],
+            whatIDid: [
+                "Built the entire site so Google can read every page properly the instant it loads — even though modern, fast-loading sites like this one are normally invisible to search engines until their code finishes running in the browser.",
+                "Gave every page — the homepage, each property listing, every blog post — its own custom title and description, generated automatically instead of typed out one by one.",
+                "Built a sitemap (a map of every page, for Google to follow) that updates itself instantly whenever a listing or article is added or removed, with zero manual work.",
+                "Made sure every possible version of the web address — with or without \"www\", secure or not — all lead to one single official address, so Google never mistakes the site for several competing copies of itself.",
+                "Added invisible shortcuts so Google can discover brand-new property listings immediately, without needing to fully load and run the page first.",
+                "Caught and fixed a sneaky issue where the WhatsApp contact button was accidentally being flagged as a broken link by SEO tools — fixed with zero change to how it works for real visitors.",
+                "Cleaned up 103 pages that were quietly sending Google mixed signals about which version was the \"real\" one to rank — a common, hard-to-spot mistake that makes pages compete with each other instead of climbing the results.",
+            ],
+            insights: [
+                { title: "Mobile-first, just like Zambia", text: "7 in 10 visits come from a phone — matching how most people in Zambia actually browse the internet. The site was built mobile-first from day one, so it was ready." },
+                { title: "Interest from outside Zambia too", text: "A solid share of visits came from South Africa, the UK, and Zimbabwe — most likely Zambians abroad and investors researching property back home." },
+                { title: "The blog is already pulling its weight", text: "A single article comparing commercial and residential property has already shown up in search 208 times and started ranking on page one — a strong early sign for the content plan." },
+                { title: "A note on conflicting numbers", text: "Some SEO tools still show this site at \"zero traffic\" — that's completely normal for a two-month-old domain, since those tools crawl the web on their own delayed schedule. The numbers on this page come straight from Google itself, which is the source that actually matters." },
+            ],
+            whatsNext: [
+                "Turn the strongest listing page into a top-10 result — adding more listings and a couple of relevant backlinks to push it up from its current position just outside Google's first page.",
+                "Publish 2–3 more blog articles around searches people are already making — renting a house, buying land, investing in Zambian property — to open up more ways to be found.",
+                "Keep earning genuine backlinks from real estate and Zambia-focused websites, the single biggest lever left to pull for a brand-new domain like this one.",
+                "Let Google finish merging the www and non-www versions of the homepage into one — once it does, all of that traffic folds into a single, stronger signal instead of two smaller ones.",
+            ],
+            images: [],
+        },
+        links: [
+            { label: "Live Site", href: "https://victorshillestates.net", primary: true },
+            { label: "Case Study", href: "/projects/victors-hill-estates", caseStudyLink: true },
+        ],
+        filter: ["All", "SEO", "Full-Stack"],
+    },
+    {
         id: "summit-stone-properties",
         title: "Summit & Stone Properties — Full-Stack Real Estate Platform",
         tags: ["SEO", "Full-Stack"],
         coverType: "webdev",
         coverImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=70",
         summary:
-            "A production real estate platform for a Lusaka, Zambia agency — public property search, a JSON-driven blog engine, and an internal admin system, built as a React SPA over an ASP.NET Core API with a custom middleware layer that makes the client-rendered site fully crawlable.",
+            "Another Lusaka real estate agency needed a complete website built from nothing — a place for buyers to search listings, a blog to bring in visitors from Google, and a private dashboard behind the scenes so the team can add and manage properties themselves. Every listing is built to get discovered and indexed by search engines automatically.",
         tech: ["React 19", "Vite", "ASP.NET Core 8", "EF Core", "PostgreSQL", "Cloudinary", "Leaflet"],
         status: ["Case Study Coming Soon"],
         links: [
@@ -287,7 +364,7 @@ export const PROJECTS = [
         coverType: "seo",
         coverImage: imgCZSCover,
         summary:
-            "3-month SEO engagement that grew monthly organic visitors from 132 to 227. Domain Rating climbed from DR 19 to DR 23 and 137 keywords entered the rankings across all positions.",
+            "A 3-month project that took a Zambian safari company from barely showing up on Google to getting real, steady interest online. Monthly visitors from Google search nearly doubled, and the site started showing up for 137 search terms it wasn't ranking for before.",
         rankingData: [
             { range: "#1-3", count: 13 },
             { range: "#4-10", count: 22 },
@@ -297,27 +374,27 @@ export const PROJECTS = [
             { range: "#41-50", count: 12 },
         ],
         metrics: [
-            { label: "200K Impressions", accent: "#2EF09A" },
+            { label: "200K Google Impressions", accent: "#2EF09A" },
             { label: "132 → 227 monthly visitors", accent: "#2EF09A" },
-            { label: "$75 → $187 traffic value", accent: "#2EF09A" },
+            { label: "$75 → $187 est. monthly value", accent: "#2EF09A" },
         ],
         caseStudy: {
             impressions: "200,000",
             before: { traffic: 132, value: "$75" },
             after: { traffic: 227, value: "$187" },
             whatIDid: [
-                "Conducted a full technical SEO audit. Fixed crawl errors, canonical issues and missing meta tags site-wide.",
-                "Performed keyword research targeting high-intent safari and tourism queries in the Zambian market.",
-                "Rewrote and expanded page content across all core landing pages to match search intent.",
-                "Built a consistent internal linking structure to pass authority from high-DR pages to target pages.",
-                "Optimised Google Business Profile and aligned on-page signals with local SEO best practices.",
-                "Monitored Google Search Console weekly, iterating on underperforming pages throughout the engagement.",
+                "Ran a full technical check-up on the website and fixed the hidden issues that were quietly stopping Google from finding and trusting its pages.",
+                "Researched exactly what people type into Google when planning a safari in Zambia, so the site could speak directly to real customers.",
+                "Rewrote the site's key pages so they actually answer visitors' questions, instead of just talking about the business.",
+                "Connected pages across the site with smart internal links, helping Google understand which pages matter most — and rank them higher.",
+                "Polished their Google Business listing so the company shows up properly when nearby customers search for safari operators.",
+                "Checked performance every single week and kept fine-tuning underperforming pages until they started climbing the rankings.",
             ],
             images: [
-                { src: "/src/assets/Classic_Zambia_Safaris_-_ahrefs.png", alt: "Ahrefs site audit showing a 99/100 health score and Domain Rating of 27", caption: "99/100 Ahrefs health score with zero broken or blocked links across 77 crawled pages." },
-                { src: "/src/assets/Classic_Zambia_Safaris_-_lighthouse_scores.png", alt: "Google Lighthouse scores: Performance 83, Accessibility 100, Best Practices 73, SEO 92", caption: "Lighthouse audit with perfect accessibility score and 92 SEO, measured in a controlled lab environment." },
-                { src: "/src/assets/Classic_Zambia_Safaris_-_page_speed__laptop_.png", alt: "Google PageSpeed Insights desktop report showing Core Web Vitals passed", caption: "Desktop Core Web Vitals passed with 1.2s LCP and 48ms INP with real Chrome user data." },
-                { src: "/src/assets/Classic_Zambia_Safaris_-_page_speed__mobile_.png", alt: "Google PageSpeed Insights mobile report showing Core Web Vitals passed", caption: "Mobile Core Web Vitals passed with 1.9s LCP and 96ms INP across real mobile devices." },
+                { src: "/src/assets/Classic_Zambia_Safaris_-_ahrefs.png", alt: "Website health report showing a 99 out of 100 score with zero broken links", caption: "A 99 out of 100 website health score — virtually no broken links or hidden technical errors anywhere on the site." },
+                { src: "/src/assets/Classic_Zambia_Safaris_-_lighthouse_scores.png", alt: "Google's site quality report showing a perfect accessibility score and 92 for SEO", caption: "Google's own site-quality test gave the site a perfect accessibility score and 92 out of 100 for SEO." },
+                { src: "/src/assets/Classic_Zambia_Safaris_-_page_speed__laptop_.png", alt: "Google speed test results for desktop showing the site passed every check", caption: "On desktop, pages load in about a second and every click responds instantly — a clean pass on Google's speed test." },
+                { src: "/src/assets/Classic_Zambia_Safaris_-_page_speed__mobile_.png", alt: "Google speed test results for mobile showing the site passed every check", caption: "On mobile, the site also loads in under 2 seconds — even on slower connections common in Zambia." },
             ],
         },
         links: [
@@ -333,7 +410,7 @@ export const PROJECTS = [
         coverType: "webdev",
         coverImage: imgH2HCover,
         summary:
-            "11-month engagement building the platform from scratch in React and ASP.NET Core, paired with a full SEO campaign. Monthly visitors grew from 0 to 20 and DR jumped from 2 to 18.",
+            "An 11-month project to build a Zambian property platform completely from scratch, then grow it from a brand-new, invisible website into one Google actually trusts. Visitors went from zero to a steadily growing audience every month, and the site's trust with Google grew nine times over.",
         rankingData: [
             { range: "#1-3", count: 1 },
             { range: "#4-10", count: 2 },
@@ -343,26 +420,26 @@ export const PROJECTS = [
             { range: "#41-50", count: 2 },
         ],
         metrics: [
-            { label: "111K Impressions", accent: "#00CFFF" },
+            { label: "111K Google Impressions", accent: "#00CFFF" },
             { label: "0 → 20 Monthly Visitors", accent: "#00CFFF" },
-            { label: "DR 2 → 18", accent: "#00CFFF" },
+            { label: "Search Trust Score 2 → 18", accent: "#00CFFF" },
         ],
         caseStudy: {
             impressions: "111,000",
             before: { traffic: 0, value: "$0" },
             after: { traffic: 20, value: "$1" },
             whatIDid: [
-                "Designed and built the full platform from scratch. React frontend, ASP.NET Core 8 backend, SQL Server database, deployed on Render with CI/CD.",
-                "Implemented server-side meta tag injection via middleware to enable bot-friendly rendering without a full SSR rewrite.",
-                "Built a three-tier slug lookup system so property URLs remain clean and SEO-friendly across listing types.",
-                "Generated and submitted a clean XML sitemap. Resolved all coverage errors flagged in Google Search Console.",
-                "Conducted keyword research targeting Zambian real estate queries and aligned page content to match search intent.",
-                "Set up Cloudflare for DNS, caching and performance, contributing to a 95+ Lighthouse score across all categories.",
+                "Designed and built the entire website and everything behind it — the property listings, the database, and an automatic deployment system that pushes updates live safely — completely from scratch.",
+                "Built a clever behind-the-scenes system so Google can properly \"read\" every page, even though the site runs as a fast, modern app that search engines normally struggle to understand.",
+                "Made sure every property has a clean, readable web address instead of a string of random numbers — which looks more professional and helps it rank better.",
+                "Built a full map of every page for Google to follow, and fixed every single error Google flagged, so nothing important got missed.",
+                "Researched what people actually search for when house-hunting in Zambia, then shaped the site's content around real search habits.",
+                "Set up extra infrastructure to make the site load faster everywhere, helping it score 95 or higher out of 100 on Google's own speed and quality test.",
             ],
             images: [
-                { src: imgH2HAhrefs, alt: "Ahrefs site audit dashboard showing a 95/100 health score rated Excellent", caption: "95/100 Ahrefs health score with 216 of 228 URLs completely error-free across 360 crawled pages." },
-                { src: imgH2HDesktop, alt: "Google Lighthouse desktop scores: Performance 81, Accessibility 84, Best Practices 96, SEO 92", caption: "Desktop Lighthouse audit with 96 Best Practices and 92 SEO out of 100." },
-                { src: imgH2HMobile, alt: "Google Lighthouse mobile scores: Performance 73, Accessibility 89, Best Practices 92, SEO 92", caption: "Mobile Lighthouse audit with 92 SEO and Best Practices scores on real mobile conditions." },
+                { src: imgH2HAhrefs, alt: "Website health report showing a 95 out of 100 score rated Excellent", caption: "A 95 out of 100 website health score, with 216 of 228 pages completely free of errors." },
+                { src: imgH2HDesktop, alt: "Google's site quality report for desktop showing high scores across every category", caption: "Google's site-quality test gave the desktop version 96 out of 100 for best practices and 92 for SEO." },
+                { src: imgH2HMobile, alt: "Google's site quality report for mobile showing high scores across every category", caption: "On mobile, the site scored 92 out of 100 for both SEO and best practices under real-world conditions." },
             ],
         },
         links: [
@@ -378,8 +455,8 @@ export const PROJECTS = [
         coverType: "cli",
         coverImage: imgCanonicalAuditor,
         summary:
-            "Automated CLI tool that detects canonical tag issues and duplicate content across large websites. Built for digital marketers and SEO professionals who need fast, scriptable audits.",
-        status: ["Prototype", "Open Source"],
+            "A free tool I built that automatically scans an entire website for a sneaky, easy-to-miss SEO mistake — pages quietly telling Google to ignore them, or competing with each other — that can hurt rankings without anyone noticing. Built for marketers who need a fast answer, not a technical manual.",
+        status: ["In Development", "Open Source"],
         links: [
             { label: "GitHub", href: "#", github: true },
         ],
@@ -392,17 +469,17 @@ export const PROJECTS = [
         coverType: "portfolio",
         coverImage: imgPortfolio,
         summary:
-            "Built with React on the frontend and ASP.NET 8 Core on the backend, deployed on Render with full CI/CD pipelines. Scored 95+ across all Lighthouse categories.",
+            "This very website — designed and built from scratch to load fast, look sharp, and rank well on Google, holding itself to the exact same standard I bring to every client project.",
         tech: ["React", "ASP.NET 8", "SQL Server", "CI/CD"],
         caseStudy: {
             impressions: "N/A",
             before: { traffic: 0, value: "$0" },
             after: { traffic: 0, value: "$0" },
             whatIDid: [
-                "Designed and built the entire portfolio as a single-page React application with ASP.NET 8 backend.",
-                "Implemented full JSON-LD structured data for Person, ProfessionalService and WebSite schemas.",
-                "Achieved 95+ Lighthouse scores across all categories with optimised Core Web Vitals.",
-                "Deployed on Render with CI/CD from GitHub for automated builds on every push.",
+                "Designed and built this entire site from the ground up, front to back.",
+                "Added behind-the-scenes information that helps Google understand exactly who I am and what I do, so the site can show up richly and accurately in search results.",
+                "Scored 95 or higher out of 100 on Google's own site-quality test, across speed, accessibility, best practices, and SEO.",
+                "Set up automatic deployment, so every update goes live safely the moment I make a change — no manual uploading, ever.",
             ],
             images: [],
         },
@@ -483,7 +560,7 @@ export default function Projects() {
                         <span className="text-[var(--cyan)]">in Numbers.</span>
                     </h2>
                     <p className="text-[var(--text-dim)] text-base sm:text-lg max-w-xl leading-relaxed">
-                        From SEO case studies with verified traffic data to open-source tools and production applications.
+                        Real websites for real businesses — see the visitor growth, the search rankings, and the results, backed by real numbers.
                     </p>
                 </div>
 

@@ -227,7 +227,6 @@ export default function ContactForm() {
         name: "",
         email: "",
         service: "",
-        budget: "",
         message: "",
     });
     const [status, setStatus] = useState("idle"); // idle | sending | success | error
@@ -338,34 +337,6 @@ export default function ContactForm() {
                                     <option value="enquiry">General Enquiry</option>
                                 </select>
                                 {/* Custom chevron */}
-                                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#50507A]" aria-hidden="true">
-                                    <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Budget dropdown (optional) */}
-                        <div>
-                            <label htmlFor="budget" className="block text-[10px] font-mono uppercase tracking-widest text-[#50507A] mb-2">
-                                Budget <span className="text-[#40405A] normal-case tracking-normal font-sans text-[10px]">(optional)</span>
-                            </label>
-                            <div className="relative">
-                                <select
-                                    id="budget"
-                                    name="budget"
-                                    value={form.budget}
-                                    onChange={handleChange}
-                                    className={`${fieldBase} appearance-none pr-10 cursor-pointer`}
-                                >
-                                    <option value="">Not sure / Flexible</option>
-                                    <option value="under500">Under $500</option>
-                                    <option value="500-1500">$500 – $1,500</option>
-                                    <option value="1500-5000">$1,500 – $5,000</option>
-                                    <option value="5000-15000">$5,000 – $15,000</option>
-                                    <option value="15000plus">$15,000+</option>
-                                </select>
                                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#50507A]" aria-hidden="true">
                                     <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                                         <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />

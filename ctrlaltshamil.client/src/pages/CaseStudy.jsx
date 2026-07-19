@@ -130,7 +130,7 @@ function ImpressionsHero({ value, accent, visible, fadeRef }) {
                 style={{ borderColor: accent, borderWidth: 40 }}
                 aria-hidden="true"
             />
-            <SectionLabel accent={`${accent}90`}>Total Search Impressions via Google Search Console</SectionLabel>
+            <SectionLabel accent={`${accent}90`}>How many times they showed up in Google search</SectionLabel>
             <div className="flex items-end gap-4 mt-4 flex-wrap">
                 <span
                     className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-none"
@@ -139,7 +139,7 @@ function ImpressionsHero({ value, accent, visible, fadeRef }) {
                     {value}
                 </span>
                 <span className="text-base sm:text-lg mb-2 text-[var(--text-dim)]">
-                    impressions recorded across the full engagement
+                    times their website appeared in someone's search results
                 </span>
             </div>
         </div>
@@ -155,13 +155,13 @@ function GrowthBadge({ before, after, accent }) {
             style={{ borderColor: `${accent}40`, background: `${accent}12`, color: accent }}
         >
             <span style={{ fontSize: 10 }}>▲</span>
-            {pct} organic growth
+            {pct} more visitors from Google
         </div>
     );
 }
 
 /* ── Before / After ────────────────────────────────────────────── */
-function BeforeAfter({ before, after, accent }) {
+function BeforeAfter({ before, after, accent, trafficLabel = "average monthly visitors", valueLabel = "estimated value per month" }) {
     const { ref, visible } = useFadeIn();
     return (
         <div
@@ -175,24 +175,26 @@ function BeforeAfter({ before, after, accent }) {
             }}
         >
             <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b" style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}>
-                <SectionLabel>Organic Traffic: Before &amp; After</SectionLabel>
+                <SectionLabel>Website visitors: before &amp; after</SectionLabel>
                 <GrowthBadge before={before.traffic} after={after.traffic} accent={accent} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:divide-x divide-white/[0.06]">
                 {/* Before */}
                 <div className="flex flex-col gap-5 p-5 sm:p-7 border-b sm:border-b-0 border-white/[0.06]">
-                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/40">Baseline</p>
+                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/40">Before my work</p>
                     <div>
                         <span className="text-4xl sm:text-5xl font-black leading-none block text-white/35" style={{ fontFamily: "var(--heading)" }}>
                             {before.traffic === 0 ? "0" : before.traffic.toLocaleString()}
                         </span>
-                        <p className="text-sm mt-1 text-white/45">avg. monthly visitors</p>
+                        <p className="text-sm mt-1 text-white/45">{trafficLabel}</p>
                     </div>
-                    <div>
-                        <span className="text-xl font-bold block text-white/35" style={{ fontFamily: "var(--heading)" }}>{before.value}</span>
-                        <p className="text-sm mt-0.5 text-white/40">est. traffic value / mo</p>
-                    </div>
+                    {before.value && (
+                        <div>
+                            <span className="text-xl font-bold block text-white/35" style={{ fontFamily: "var(--heading)" }}>{before.value}</span>
+                            <p className="text-sm mt-0.5 text-white/40">{valueLabel}</p>
+                        </div>
+                    )}
                     <div className="h-1.5 rounded-full overflow-hidden bg-white/[0.06]">
                         <div className="h-full rounded-full bg-white/20" style={{ width: before.traffic === 0 ? "3%" : `${Math.min(100, (before.traffic / after.traffic) * 100)}%` }} />
                     </div>
@@ -200,22 +202,173 @@ function BeforeAfter({ before, after, accent }) {
 
                 {/* After */}
                 <div className="flex flex-col gap-5 p-5 sm:p-7" style={{ background: `${accent}06` }}>
-                    <p className="text-[10px] font-mono tracking-widest uppercase" style={{ color: accent }}>Post-Engagement</p>
+                    <p className="text-[10px] font-mono tracking-widest uppercase" style={{ color: accent }}>After my work</p>
                     <div>
                         <span className="text-4xl sm:text-5xl font-black leading-none block" style={{ color: accent, fontFamily: "var(--heading)", textShadow: `0 0 28px ${accent}45` }}>
                             {after.traffic.toLocaleString()}
                         </span>
-                        <p className="text-sm mt-1 text-white/55">avg. monthly visitors</p>
+                        <p className="text-sm mt-1 text-white/55">{trafficLabel}</p>
                     </div>
-                    <div>
-                        <span className="text-xl font-bold block" style={{ color: accent, fontFamily: "var(--heading)" }}>{after.value}</span>
-                        <p className="text-sm mt-0.5 text-white/50">est. traffic value / mo</p>
-                    </div>
+                    {after.value && (
+                        <div>
+                            <span className="text-xl font-bold block" style={{ color: accent, fontFamily: "var(--heading)" }}>{after.value}</span>
+                            <p className="text-sm mt-0.5 text-white/50">{valueLabel}</p>
+                        </div>
+                    )}
                     <div className="h-1.5 rounded-full overflow-hidden" style={{ background: `${accent}20` }}>
                         <div className="h-full rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, ${accent}70, ${accent})`, boxShadow: `0 0 8px ${accent}60` }} />
                     </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+/* ── Monthly growth bars ──────────────────────────────────────── */
+function MonthlyGrowth({ data, accent, headline }) {
+    const { ref, visible } = useFadeIn();
+    const max = Math.max(...data.map(d => d.value));
+    return (
+        <div ref={ref} className="rounded-2xl border p-5 sm:p-7" style={{
+            borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)",
+            opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s",
+        }}>
+            <SectionLabel>How often it's showing up in Google, month by month</SectionLabel>
+            {headline && <p className="text-sm sm:text-base text-white/75 mt-3 mb-1 leading-relaxed">{headline}</p>}
+            <div className="flex items-end gap-3 sm:gap-4 h-24 mt-6">
+                {data.map((d, i) => (
+                    <div key={d.label} className="flex flex-col items-center gap-1.5 flex-1">
+                        <span className="text-xs sm:text-sm font-mono font-bold" style={{ color: accent }}>{d.value}/day</span>
+                        <div className="w-full rounded-sm" style={{
+                            height: `${Math.max(8, (d.value / max) * 64)}px`, background: accent,
+                            opacity: visible ? 0.3 + (i / (data.length - 1 || 1)) * 0.6 : 0, transition: `opacity 0.4s ease ${0.2 + i * 0.1}s`,
+                        }} />
+                    </div>
+                ))}
+            </div>
+            <div className="flex gap-3 sm:gap-4 mt-2">
+                {data.map((d) => (
+                    <div key={d.label} className="flex-1 text-center text-[10px] sm:text-[11px] font-mono text-white/45">{d.label}</div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+/* ── Top keywords ─────────────────────────────────────────────── */
+function positionTier(position) {
+    if (position <= 3) return { label: "Top 3 on Google", color: "#2EF09A" };
+    if (position <= 10) return { label: "Page 1 of Google", color: "#00CFFF" };
+    return { label: "Page 2+", color: "#7070A0" };
+}
+function TopKeywords({ items, accent }) {
+    const { ref, visible } = useFadeIn();
+    return (
+        <div ref={ref}>
+            <div className="mb-8 sm:mb-10">
+                <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase mb-4" style={{ color: accent }}>
+                    Search Results
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-primary)] tracking-tight" style={{ fontFamily: "var(--heading)" }}>
+                    What people are already <span style={{ color: accent }}>finding it for.</span>
+                </h2>
+            </div>
+            <div className="flex flex-col gap-3">
+                {items.map((kw, i) => {
+                    const tier = positionTier(kw.position);
+                    return (
+                        <div
+                            key={kw.query}
+                            className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 rounded-2xl border p-4 sm:p-5"
+                            style={{
+                                borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.025)",
+                                opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
+                                transition: `opacity 0.5s ease ${0.05 + i * 0.06}s, transform 0.5s ease ${0.05 + i * 0.06}s`,
+                            }}
+                        >
+                            <p className="text-sm sm:text-base text-white/85 flex-1">
+                                "<span className="font-semibold">{kw.query}</span>"
+                            </p>
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span
+                                    className="text-[10px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-full border whitespace-nowrap"
+                                    style={{ color: tier.color, borderColor: `${tier.color}40`, background: `${tier.color}12` }}
+                                >
+                                    {tier.label}
+                                </span>
+                                <span className="text-xs font-mono text-white/40 whitespace-nowrap">{kw.note}</span>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+/* ── Insights ──────────────────────────────────────────────────── */
+function Insights({ items, accent }) {
+    const { ref, visible } = useFadeIn();
+    return (
+        <div ref={ref}>
+            <div className="mb-8 sm:mb-10">
+                <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase mb-4" style={{ color: accent }}>
+                    Along The Way
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-primary)] tracking-tight" style={{ fontFamily: "var(--heading)" }}>
+                    What stood <span style={{ color: accent }}>out.</span>
+                </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {items.map((item, i) => (
+                    <div
+                        key={item.title}
+                        className="rounded-2xl border p-5 sm:p-6"
+                        style={{
+                            borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.025)",
+                            opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(14px)",
+                            transition: `opacity 0.5s ease ${0.05 + i * 0.08}s, transform 0.5s ease ${0.05 + i * 0.08}s`,
+                        }}
+                    >
+                        <p className="text-sm font-bold mb-2" style={{ color: accent }}>{item.title}</p>
+                        <p className="text-sm leading-relaxed text-white/75">{item.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+/* ── What's next ───────────────────────────────────────────────── */
+function WhatsNext({ items, accent }) {
+    const { ref, visible } = useFadeIn();
+    return (
+        <div ref={ref}>
+            <div className="mb-8 sm:mb-10">
+                <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase mb-4" style={{ color: accent }}>
+                    Still In Progress
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-primary)] tracking-tight" style={{ fontFamily: "var(--heading)" }}>
+                    What's <span style={{ color: accent }}>next.</span>
+                </h2>
+            </div>
+            <ul className="flex flex-col gap-3">
+                {items.map((item, i) => (
+                    <li
+                        key={i}
+                        className="flex gap-4 items-start rounded-2xl border border-dashed p-5 sm:p-6"
+                        style={{
+                            borderColor: `${accent}30`, background: "rgba(255,255,255,0.015)",
+                            opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
+                            transition: `opacity 0.5s ease ${0.05 + i * 0.07}s, transform 0.5s ease ${0.05 + i * 0.07}s`,
+                        }}
+                    >
+                        <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full" style={{ background: accent }} aria-hidden="true" />
+                        <p className="text-sm sm:text-base leading-relaxed text-white/80">{item}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
@@ -232,7 +385,7 @@ function RankingBars({ data, accent }) {
             opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s",
         }}>
-            <SectionLabel>Keyword Ranking Distribution</SectionLabel>
+            <SectionLabel>Where these pages rank on Google</SectionLabel>
             <div className="flex items-end gap-2 sm:gap-3 h-20 mt-5">
                 {data.map((d, i) => (
                     <div key={d.range} className="flex flex-col items-center gap-1.5 flex-1">
@@ -416,27 +569,54 @@ export default function CaseStudy() {
                     )}
                 </div>
 
-                {/* Impressions */}
-                <div className="mb-4">
-                    <ImpressionsHero value={cs.impressions} accent={accent} fadeRef={impRef} visible={impVisible} />
-                </div>
+                {/* Impressions + before/after — only when there's real traffic data to show */}
+                {cs.impressions && cs.impressions !== "N/A" && (
+                    <>
+                        <div className="mb-4">
+                            <ImpressionsHero value={cs.impressions} accent={accent} fadeRef={impRef} visible={impVisible} />
+                        </div>
 
-                {/* Stat cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
-                    <StatCard label="Visitors: Before" value={cs.before.traffic === 0 ? "0" : cs.before.traffic.toLocaleString()} sub={`${cs.before.value} / mo est. value`} accent={accent} dim delay={0.05} visible={impVisible} />
-                    <StatCard label="Visitors: After" value={cs.after.traffic.toLocaleString()} sub={`${cs.after.value} / mo est. value`} accent={accent} delay={0.12} visible={impVisible} />
-                </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
+                            <StatCard
+                                label="Website visitors: before"
+                                value={cs.before.traffic === 0 ? "0" : cs.before.traffic.toLocaleString()}
+                                sub={cs.before.value ? `${cs.before.value} ${cs.valueLabel || "estimated value per month"}` : undefined}
+                                accent={accent} dim delay={0.05} visible={impVisible}
+                            />
+                            <StatCard
+                                label="Website visitors: after"
+                                value={cs.after.traffic.toLocaleString()}
+                                sub={cs.after.value ? `${cs.after.value} ${cs.valueLabel || "estimated value per month"}` : undefined}
+                                accent={accent} delay={0.12} visible={impVisible}
+                            />
+                        </div>
 
-                {/* Before / After */}
-                <div className="mb-4">
-                    <BeforeAfter before={cs.before} after={cs.after} accent={accent} />
-                </div>
+                        <div className="mb-4">
+                            <BeforeAfter before={cs.before} after={cs.after} accent={accent} trafficLabel={cs.trafficLabel} valueLabel={cs.valueLabel} />
+                        </div>
+                    </>
+                )}
 
                 {/* Ranking bars */}
                 {project.rankingData && (
                     <div className="mb-4">
                         <RankingBars data={project.rankingData} accent={accent} />
                     </div>
+                )}
+
+                {/* Monthly growth */}
+                {cs.monthlyGrowth && (
+                    <div className="mb-4">
+                        <MonthlyGrowth data={cs.monthlyGrowth} accent={accent} headline={cs.monthlyGrowthHeadline} />
+                    </div>
+                )}
+
+                {/* Top keywords */}
+                {cs.topKeywords?.length > 0 && (
+                    <>
+                        <Divider />
+                        <TopKeywords items={cs.topKeywords} accent={accent} />
+                    </>
                 )}
 
                 {/* Evidence images */}
@@ -451,6 +631,22 @@ export default function CaseStudy() {
 
                 {/* What I Did */}
                 <WhatIDid items={cs.whatIDid} accent={accent} />
+
+                {/* Insights */}
+                {cs.insights?.length > 0 && (
+                    <>
+                        <Divider />
+                        <Insights items={cs.insights} accent={accent} />
+                    </>
+                )}
+
+                {/* What's next */}
+                {cs.whatsNext?.length > 0 && (
+                    <>
+                        <Divider />
+                        <WhatsNext items={cs.whatsNext} accent={accent} />
+                    </>
+                )}
             </div>
         </main>
     );

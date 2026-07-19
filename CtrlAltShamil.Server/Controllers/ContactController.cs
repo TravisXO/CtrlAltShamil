@@ -37,8 +37,18 @@ public class ContactController : ControllerBase
         var fromEmail = _config["Resend:FromEmail"];
         var toEmail = _config["Resend:ToEmail"];
 
+        var serviceLabels = new Dictionary<string, string>
+        {
+            ["freelance"] = "Freelance Web Development",
+            ["seo"] = "SEO Audit & Strategy",
+            ["fulltime"] = "Remote Full-Time Role",
+            ["enquiry"] = "General Enquiry",
+        };
+        var serviceLabel = serviceLabels.GetValueOrDefault(body.Service, body.Service);
+
         var name = WebUtility.HtmlEncode(body.Name);
         var email = WebUtility.HtmlEncode(body.Email);
+        var service = WebUtility.HtmlEncode(serviceLabel);
         var message = WebUtility.HtmlEncode(body.Message);
 
         var request = new HttpRequestMessage(HttpMethod.Post, "https://api.resend.com/emails");
@@ -49,11 +59,12 @@ public class ContactController : ControllerBase
             to = new[] { toEmail },
             reply_to = body.Email,
             subject = $"New message from {body.Name}",
-            text = $"Name: {body.Name}\nEmail: {body.Email}\n\n{body.Message}",
+            text = $"Name: {body.Name}\nEmail: {body.Email}\nService: {serviceLabel}\n\n{body.Message}",
             html = $@"
                 <h3>New Contact Form Submission</h3>
                 <p><strong>Name:</strong> {name}</p>
                 <p><strong>Email:</strong> {email}</p>
+                <p><strong>Service:</strong> {service}</p>
                 <p><strong>Message:</strong><br/>{message}</p>"
         });
 

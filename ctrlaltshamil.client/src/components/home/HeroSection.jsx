@@ -30,11 +30,13 @@ function useCountUp(target, duration = 2000, start = false) {
 }
 
 /* ─── Stat data ─────────────────────────────────────────────────── */
+/* Derived from real, documented case study numbers (Classic Zambia Safaris,
+   House to Home, Victor's Hill Estates) — see /projects for the per-project data. */
 const STATS = [
-    { value: 900, suffix: "%", label: "Traffic Growth" },
-    { value: 102, suffix: "%", label: "Visibility Increase" },
-    { value: 80, suffix: "+", label: "Page 1 Keywords" },
-    { value: 315000, suffix: "", label: "Total Impressions" },
+    { value: 316830, suffix: "", label: "Total Search Impressions" },
+    { value: 215, suffix: "%", label: "Average Traffic Growth" },
+    { value: 40, suffix: "+", label: "Page 1 Google Keywords" },
+    { value: 5, suffix: "", label: "Client Projects Delivered" },
 ];
 
 /* ─── Single stat cell ──────────────────────────────────────────── */

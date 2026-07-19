@@ -9,6 +9,9 @@ import BlogArticle from "./pages/BlogArticle";
 import CaseStudy from "./pages/CaseStudy";
 import ScrollToTop from "./components/ScrollToTop";
 import About from "./pages/About";
+import Subscription from "./pages/Subscription";
+import ServicesSEO from "./pages/ServicesSEO";
+import ServicesDevelopment from "./pages/ServicesDevelopment";
 
 import "./App.css";
 import "./masonry.css"; // ← add this
@@ -32,6 +35,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:id" element={<CaseStudy />} />
+                <Route path="/subscription" element={<Subscription />} />
+                <Route path="/services/seo" element={<ServicesSEO />} />
+                <Route path="/services/development" element={<ServicesDevelopment />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<BlogArticle />} />
