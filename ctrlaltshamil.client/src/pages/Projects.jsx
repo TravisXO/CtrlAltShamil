@@ -7,6 +7,9 @@ import imgH2HCover from "../assets/h2h-ahrefs.png";
 import imgH2HMobile from "../assets/H2H_-_page_speed__mobile_.png";
 import imgCanonicalAuditor from "../assets/canonical-seo-auditor.png";
 import imgPortfolio from "../assets/portofolio-landing.png";
+import imgScandinavianHero from "../assets/Scandinavian_-_Hero.png";
+import imgSummitAhrefs from "../assets/Summit_-_ahrefs.png";
+import imgVictorsAhrefs from "../assets/Victors_-_ahrefs.png";
 
 /* ── SEO ───────────────────────────────────────────────────────── */
 function usePageSEO() {
@@ -270,7 +273,7 @@ export const PROJECTS = [
         title: "Scandinavian Living Lusaka — Boutique Hospitality Website",
         tags: ["SEO", "Web Dev"],
         coverType: "webdev",
-        coverImage: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=70",
+        coverImage: imgScandinavianHero,
         summary:
             "A boutique serviced-apartment business in Lusaka needed a website that actually matched their brand — calm, clean, Nordic-inspired — instead of a generic template. Built as a fast, modern site that runs alongside their existing booking system, so nothing about how guests already reach them had to change behind the scenes.",
         tech: ["React 19", "Vite", "Tailwind CSS", "WordPress", "SiteGround"],
@@ -285,7 +288,7 @@ export const PROJECTS = [
         title: "Victor's Hill Estates — Real Estate Platform Build & SEO",
         tags: ["SEO", "Full-Stack"],
         coverType: "webdev",
-        coverImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=70",
+        coverImage: imgVictorsAhrefs,
         summary:
             "A licensed real estate agency in Lusaka needed a brand-new website built from a domain with zero history behind it. 73 days after launch — with no paid ads and no link building — it's already ranking in the top 3 on Google for \"real estate companies in Zambia\" and similar high-intent searches.",
         tech: ["React 19", "Vite", "ASP.NET Core 8", "Cloudinary", "SendGrid", "Render"],
@@ -334,7 +337,13 @@ export const PROJECTS = [
                 "Keep earning genuine backlinks from real estate and Zambia-focused websites, the single biggest lever left to pull for a brand-new domain like this one.",
                 "Let Google finish merging the www and non-www versions of the homepage into one — once it does, all of that traffic folds into a single, stronger signal instead of two smaller ones.",
             ],
-            images: [],
+            images: [
+                {
+                    src: imgVictorsAhrefs,
+                    alt: "Website health report showing a 91 out of 100 score rated Excellent",
+                    caption: "A 91 out of 100 website health score — 128 of the 141 pages checked are completely free of technical errors.",
+                },
+            ],
         },
         links: [
             { label: "Live Site", href: "https://victorshillestates.net", primary: true },
@@ -347,7 +356,7 @@ export const PROJECTS = [
         title: "Summit & Stone Properties — Full-Stack Real Estate Platform",
         tags: ["SEO", "Full-Stack"],
         coverType: "webdev",
-        coverImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=70",
+        coverImage: imgSummitAhrefs,
         summary:
             "Another Lusaka real estate agency needed a complete website built from nothing — a place for buyers to search listings, a blog to bring in visitors from Google, and a private dashboard behind the scenes so the team can add and manage properties themselves. Every listing is built to get discovered and indexed by search engines automatically.",
         tech: ["React 19", "Vite", "ASP.NET Core 8", "EF Core", "PostgreSQL", "Cloudinary", "Leaflet"],
