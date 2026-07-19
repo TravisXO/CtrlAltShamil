@@ -307,11 +307,11 @@ function PriceBlock({ monthlyZmw, monthlyUsd, rangeMaxZmw, rangeMaxUsd, cycle, a
                 </span>
                 <span className="text-sm text-[var(--text-dim)] mb-0.5">/ month</span>
             </div>
-            <span className="text-xs font-mono text-[#7070A0]">
+            <span className="text-[13px] font-mono text-[#8888B0]">
                 ≈ ${u.perMonth}{isRange && `–$${uMax.perMonth}`} per month{isRange && ", depending on workload"}
             </span>
             {cycle !== "monthly" && (
-                <span className="text-xs" style={{ color: accent }}>
+                <span className="text-[13px] font-medium" style={{ color: accent }}>
                     K{z.total.toLocaleString()}{isRange && `–K${zMax.total.toLocaleString()}`} {z.billedLabel}
                 </span>
             )}
@@ -393,19 +393,19 @@ function PlanCard({ plan, index, visible, cycle, onChoose }) {
                         accent={plan.accent}
                     />
 
-                    <p className="text-xs text-[#7070A0] italic">{plan.bestFor}</p>
+                    <p className="text-sm text-[#8888B0] italic leading-relaxed">{plan.bestFor}</p>
 
-                    <ul className="flex flex-col gap-2.5">
+                    <ul className="flex flex-col gap-3">
                         {plan.deliverables.map((d) => {
                             const active = isItemActive(d);
                             const unlockLabel = d.variant && d.variant !== "basic" ? plan.variants?.find((v) => v.id === d.variant)?.label : null;
                             return (
-                                <li key={d.text} className="flex items-start gap-2.5 text-sm leading-snug" style={{ color: active ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.35)" }}>
+                                <li key={d.text} className="flex items-start gap-2.5 text-[15px] leading-relaxed" style={{ color: active ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)" }}>
                                     <CheckIcon dim={!active} />
                                     <span>
                                         {d.text}
                                         {unlockLabel && !active && (
-                                            <span className="ml-1.5 text-[10px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: `${plan.accent}15`, color: plan.accent }}>
+                                            <span className="ml-1.5 text-[10px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded whitespace-nowrap" style={{ background: `${plan.accent}15`, color: plan.accent }}>
                                                 {unlockLabel}
                                             </span>
                                         )}
@@ -415,7 +415,7 @@ function PlanCard({ plan, index, visible, cycle, onChoose }) {
                         })}
                     </ul>
 
-                    <p className="text-xs text-[#7070A0] leading-relaxed border-t border-[#14142A] pt-4">{plan.limits}</p>
+                    <p className="text-sm text-[#8888B0] leading-relaxed border-t border-[#14142A] pt-4">{plan.limits}</p>
                 </div>
 
                 <button
@@ -432,33 +432,33 @@ function PlanCard({ plan, index, visible, cycle, onChoose }) {
                     to={plan.learnMoreHref || "#"}
                     tabIndex={plan.learnMoreHref ? undefined : -1}
                     aria-hidden={plan.learnMoreHref ? undefined : true}
-                    className={`text-xs font-mono text-center underline underline-offset-2 ${plan.learnMoreHref ? "" : "invisible pointer-events-none"}`}
+                    className={`text-[13px] font-mono text-center underline underline-offset-2 ${plan.learnMoreHref ? "" : "invisible pointer-events-none"}`}
                     style={{ color: plan.accent }}
                 >
                     {plan.learnMoreLabel || "placeholder"} →
                 </Link>
 
                 <details className="group">
-                    <summary className="cursor-pointer list-none flex items-center justify-between gap-2 text-xs font-mono uppercase tracking-widest pt-3 border-t border-[#14142A]" style={{ color: "#7070A0" }}>
+                    <summary className="cursor-pointer list-none flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-widest pt-3 border-t border-[#14142A]" style={{ color: "#8888B0" }}>
                         View full plan details
                         <span className="shrink-0 transition-transform duration-200 group-open:rotate-45 text-base leading-none">+</span>
                     </summary>
-                    <div className="flex flex-col gap-4 pt-4">
+                    <div className="flex flex-col gap-5 pt-5">
                         <div>
-                            <p className="text-[10px] font-mono tracking-widest uppercase text-[#2EF09A] mb-2">Advantages</p>
-                            <ul className="flex flex-col gap-1.5">
+                            <p className="text-[11px] font-mono tracking-widest uppercase text-[#2EF09A] mb-2.5">Advantages</p>
+                            <ul className="flex flex-col gap-2">
                                 {plan.pros.map((p) => (
-                                    <li key={p} className="flex items-start gap-2 text-xs text-white/65 leading-snug">
+                                    <li key={p} className="flex items-start gap-2.5 text-sm text-white/75 leading-relaxed">
                                         <DotIcon />{p}
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <div>
-                            <p className="text-[10px] font-mono tracking-widest uppercase text-[#F0C22E] mb-2">Limitations</p>
-                            <ul className="flex flex-col gap-1.5">
+                            <p className="text-[11px] font-mono tracking-widest uppercase text-[#F0C22E] mb-2.5">Limitations</p>
+                            <ul className="flex flex-col gap-2">
                                 {plan.cons.map((c) => (
-                                    <li key={c} className="flex items-start gap-2 text-xs text-white/65 leading-snug">
+                                    <li key={c} className="flex items-start gap-2.5 text-sm text-white/75 leading-relaxed">
                                         <DotIcon />{c}
                                     </li>
                                 ))}
@@ -497,9 +497,9 @@ const LABEL_STYLES = {
 };
 function ComparisonCell({ value }) {
     const style = LABEL_STYLES[value];
-    if (!style) return <span className="text-xs text-white/70">{value}</span>;
+    if (!style) return <span className="text-sm text-white/75 leading-snug">{value}</span>;
     return (
-        <span className="inline-flex text-[11px] font-mono px-2.5 py-1 rounded-full" style={{ color: style.color, background: style.background }}>
+        <span className="inline-flex text-xs font-mono px-3 py-1.5 rounded-full whitespace-nowrap" style={{ color: style.color, background: style.background }}>
             {value}
         </span>
     );
@@ -529,28 +529,28 @@ function ComparisonTable() {
         <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
             <SectionHeading eyebrow="Compare" title="See it all," accentText="side by side." />
             <div className="rounded-2xl border overflow-x-auto" style={{ borderColor: "var(--border-subtle)", background: "var(--surface-raised)" }}>
-                <table className="w-full text-sm border-collapse min-w-[700px]">
+                <table className="w-full text-sm border-collapse min-w-[720px]">
                     <thead>
                         <tr className="border-b" style={{ borderColor: "#1A1A30" }}>
-                            <th className="text-left font-mono text-[10px] uppercase tracking-widest text-[#50507A] p-4">Feature</th>
+                            <th className="text-left font-mono text-[11px] uppercase tracking-widest text-[#6A6A90] p-5">Feature</th>
                             {PLANS.map((p) => (
-                                <th key={p.id} className="text-left font-bold p-4" style={{ color: p.accent, fontFamily: "var(--heading)" }}>{p.name}</th>
+                                <th key={p.id} className="text-left text-lg font-bold p-5" style={{ color: p.accent, fontFamily: "var(--heading)" }}>{p.name}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {COMPARISON_ROWS.map((row, i) => (
                             <tr key={row.label} style={{ background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)" }}>
-                                <td className="p-4 text-xs text-white/75 whitespace-nowrap">{row.label}</td>
+                                <td className="p-5 text-sm text-white/80 whitespace-nowrap">{row.label}</td>
                                 {row.values.map((v, j) => (
-                                    <td key={j} className="p-4"><ComparisonCell value={v} /></td>
+                                    <td key={j} className="p-5"><ComparisonCell value={v} /></td>
                                 ))}
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            <p className="text-xs text-[#5A5A80] mt-4">Scroll sideways on smaller screens to see every plan.</p>
+            <p className="text-sm text-[#6A6A90] mt-4">Scroll sideways on smaller screens to see every plan.</p>
         </div>
     );
 }

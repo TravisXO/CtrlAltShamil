@@ -386,7 +386,7 @@ function RankingBars({ data, accent }) {
             transition: "opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s",
         }}>
             <SectionLabel>Where these pages rank on Google</SectionLabel>
-            <div className="flex items-end gap-2 sm:gap-3 h-20 mt-5">
+            <div className="flex items-end gap-2 sm:gap-3 h-20 mt-12 sm:mt-16">
                 {data.map((d, i) => (
                     <div key={d.range} className="flex flex-col items-center gap-1.5 flex-1">
                         <span className="text-xs font-mono font-bold" style={{ color: colours[i % colours.length] }}>{d.count}</span>

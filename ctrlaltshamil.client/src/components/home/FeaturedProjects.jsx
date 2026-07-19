@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { PROJECTS, ProjectCard } from "../../pages/Projects";
 
@@ -10,12 +10,7 @@ function useFadeIn(threshold = 0.15) {
         const el = ref.current;
         if (!el) return;
         const obs = new IntersectionObserver(
-            ([e]) => {
-                if (e.isIntersecting) {
-                    setVisible(true);
-                    obs.disconnect();
-                }
-            },
+            ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
             { threshold }
         );
         obs.observe(el);
@@ -24,7 +19,7 @@ function useFadeIn(threshold = 0.15) {
     return { ref, visible };
 }
 
-/* ── Arrow icon ────────────────────────────────────────────────── */
+/* ── Icons ─────────────────────────────────────────────────────── */
 function ArrowIcon({ className = "" }) {
     return (
         <svg viewBox="0 0 16 16" fill="currentColor" className={`w-3.5 h-3.5 ${className}`} aria-hidden="true">
@@ -32,22 +27,59 @@ function ArrowIcon({ className = "" }) {
         </svg>
     );
 }
+function ChevronIcon({ className = "" }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-5 h-5 ${className}`} aria-hidden="true">
+            <path d="M9 5l7 7-7 7" />
+        </svg>
+    );
+}
+
+/* ── Chunk helper ──────────────────────────────────────────────── */
+function chunk(arr, size) {
+    const out = [];
+    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+    return out;
+}
 
 /* ── Section ───────────────────────────────────────────────────── */
 export default function FeaturedProjects() {
     const { ref: headRef, visible: headVisible } = useFadeIn(0.2);
     const { ref: ctaRef, visible: ctaVisible } = useFadeIn(0.2);
     const { ref: trackRef, visible: trackVisible } = useFadeIn(0.05);
-    const scrollerRef = useRef(null);
+
+    const [perPage, setPerPage] = useState(2);
+    const [page, setPage] = useState(0);
+    const [paused, setPaused] = useState(false);
     const [lightbox, setLightbox] = useState(null);
 
-    const scrollByCard = (dir) => {
-        const el = scrollerRef.current;
-        if (!el) return;
-        const card = el.querySelector("[data-carousel-card]");
-        const step = card ? card.getBoundingClientRect().width + 20 : 340;
-        el.scrollBy({ left: dir * step, behavior: "smooth" });
-    };
+    /* 2 cards per page on desktop, 1 on mobile — driven off live width so it
+       stays correct through any resize, not just at breakpoint crossings */
+    useEffect(() => {
+        const apply = () => setPerPage(window.innerWidth >= 640 ? 2 : 1);
+        apply();
+        window.addEventListener("resize", apply, { passive: true });
+        return () => window.removeEventListener("resize", apply);
+    }, []);
+
+    const pages = chunk(PROJECTS, perPage);
+    const pageCount = pages.length;
+
+    /* Keep the current page valid when the layout (perPage) changes */
+    useEffect(() => {
+        setPage((p) => Math.min(p, pageCount - 1));
+    }, [pageCount]);
+
+    const goTo = useCallback((i) => setPage(((i % pageCount) + pageCount) % pageCount), [pageCount]);
+    const next = useCallback(() => goTo(page + 1), [goTo, page]);
+    const prev = useCallback(() => goTo(page - 1), [goTo, page]);
+
+    /* Auto-advance, paused on hover/focus or when off-screen */
+    useEffect(() => {
+        if (paused || !trackVisible || pageCount <= 1) return;
+        const id = setInterval(() => setPage((p) => (p + 1) % pageCount), 6000);
+        return () => clearInterval(id);
+    }, [paused, trackVisible, pageCount]);
 
     return (
         <section
@@ -101,66 +133,114 @@ export default function FeaturedProjects() {
                         </h2>
                     </div>
 
-                    {/* Prev/Next controls */}
+                    {/* Desktop nav buttons */}
                     <div className="hidden sm:flex items-center gap-2 shrink-0">
                         <button
                             type="button"
-                            onClick={() => scrollByCard(-1)}
-                            className="w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] hover:text-[var(--cyan)] hover:border-[#00CFFF40] transition-all duration-200 flex items-center justify-center cursor-pointer"
-                            aria-label="Previous project"
+                            onClick={prev}
+                            className="w-11 h-11 rounded-full border border-[#2A2A45] text-[#A0A0C0] hover:text-[var(--cyan)] hover:border-[#00CFFF40] hover:bg-[#00CFFF08] active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer backdrop-blur-sm"
+                            aria-label="Previous projects"
                         >
-                            <ArrowIcon className="rotate-180" />
+                            <ChevronIcon className="rotate-180" />
                         </button>
                         <button
                             type="button"
-                            onClick={() => scrollByCard(1)}
-                            className="w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] hover:text-[var(--cyan)] hover:border-[#00CFFF40] transition-all duration-200 flex items-center justify-center cursor-pointer"
-                            aria-label="Next project"
+                            onClick={next}
+                            className="w-11 h-11 rounded-full border border-[#2A2A45] text-[#A0A0C0] hover:text-[var(--cyan)] hover:border-[#00CFFF40] hover:bg-[#00CFFF08] active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer backdrop-blur-sm"
+                            aria-label="Next projects"
                         >
-                            <ArrowIcon />
+                            <ChevronIcon />
                         </button>
                     </div>
                 </div>
 
-                {/* Carousel */}
+                {/* Progress bar */}
+                <div className="h-0.5 w-full rounded-full overflow-hidden bg-white/[0.06] mb-6">
+                    <div
+                        className="h-full rounded-full"
+                        style={{
+                            width: `${((page + 1) / pageCount) * 100}%`,
+                            background: "linear-gradient(to right, #00CFFF, #2EF09A)",
+                            transition: "width 0.6s cubic-bezier(0.23,1,0.32,1)",
+                        }}
+                    />
+                </div>
+
+                {/* Carousel viewport */}
                 <div
                     ref={trackRef}
-                    style={{ opacity: trackVisible ? 1 : 0, transform: trackVisible ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}
+                    className="overflow-hidden"
+                    onMouseEnter={() => setPaused(true)}
+                    onMouseLeave={() => setPaused(false)}
+                    onFocusCapture={() => setPaused(true)}
+                    onBlurCapture={() => setPaused(false)}
+                    style={{ opacity: trackVisible ? 1 : 0, transition: "opacity 0.6s ease" }}
                 >
                     <div
-                        ref={scrollerRef}
-                        className="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth"
-                        style={{ scrollbarWidth: "thin" }}
+                        className="flex items-stretch"
+                        style={{
+                            transform: `translateX(-${page * 100}%)`,
+                            transition: "transform 0.6s cubic-bezier(0.23,1,0.32,1)",
+                        }}
                     >
-                        {PROJECTS.map((project, i) => (
+                        {pages.map((group, pi) => (
                             <div
-                                key={project.id}
-                                data-carousel-card
-                                className="snap-start shrink-0 w-[82vw] sm:w-[340px]"
+                                key={pi}
+                                className="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 px-0.5"
+                                aria-hidden={pi !== page}
                             >
-                                <ProjectCard project={project} index={i} visible={trackVisible} onImageClick={setLightbox} />
+                                {group.map((project, i) => (
+                                    <ProjectCard
+                                        key={project.id}
+                                        project={project}
+                                        index={i}
+                                        visible={trackVisible}
+                                        onImageClick={setLightbox}
+                                    />
+                                ))}
+                                {/* Keep a single-card final page left-aligned rather than stretched */}
+                                {group.length === 1 && perPage === 2 && <div aria-hidden="true" />}
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Mobile prev/next controls */}
-                <div className="flex sm:hidden items-center justify-center gap-3 mt-6">
+                {/* Indicators + mobile nav */}
+                <div className="flex items-center justify-center gap-4 mt-8">
                     <button
                         type="button"
-                        onClick={() => scrollByCard(-1)}
-                        className="w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] flex items-center justify-center active:scale-95 transition-all duration-200 cursor-pointer"
-                        aria-label="Previous project"
+                        onClick={prev}
+                        className="sm:hidden w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer"
+                        aria-label="Previous projects"
                     >
-                        <ArrowIcon className="rotate-180" />
+                        <ChevronIcon className="rotate-180 w-4 h-4" />
                     </button>
+
+                    <div className="flex items-center gap-2" role="tablist" aria-label="Project pages">
+                        {pages.map((_, i) => (
+                            <button
+                                key={i}
+                                type="button"
+                                role="tab"
+                                aria-selected={i === page}
+                                aria-label={`Go to project page ${i + 1}`}
+                                onClick={() => goTo(i)}
+                                className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
+                                style={{
+                                    width: i === page ? 28 : 10,
+                                    background: i === page ? "var(--cyan)" : "rgba(255,255,255,0.18)",
+                                }}
+                            />
+                        ))}
+                    </div>
+
                     <button
                         type="button"
-                        onClick={() => scrollByCard(1)}
-                        className="w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] flex items-center justify-center active:scale-95 transition-all duration-200 cursor-pointer"
-                        aria-label="Next project"
+                        onClick={next}
+                        className="sm:hidden w-10 h-10 rounded-full border border-[#2A2A45] text-[#A0A0C0] active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer"
+                        aria-label="Next projects"
                     >
-                        <ArrowIcon />
+                        <ChevronIcon className="w-4 h-4" />
                     </button>
                 </div>
 
