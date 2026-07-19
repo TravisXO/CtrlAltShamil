@@ -31,7 +31,6 @@ function ArrowIcon({ className = "" }) {
 /* ── Starting price for a plan, regardless of shape ──────────────── */
 function startingZmw(plan) {
     if (plan.variants) return plan.variants[0].priceZmw;
-    if (plan.priceZmwMin) return plan.priceZmwMin;
     return plan.priceZmw;
 }
 
@@ -101,6 +100,20 @@ export default function SubscriptionTeaser() {
                     {PLANS.map((plan, i) => (
                         <MiniPlanCard key={plan.id} plan={plan} delay={0.1 + i * 0.08} />
                     ))}
+                    <Link
+                        to="/subscription#projects"
+                        className="flex flex-col rounded-2xl border p-5 sm:p-6 gap-3 transition-colors duration-200 hover:border-[#C07AF045]"
+                        style={{ borderColor: "var(--border-subtle)", background: "var(--surface-raised)" }}
+                    >
+                        <h3 className="text-lg font-black text-[var(--text-primary)]" style={{ fontFamily: "var(--heading)" }}>One-off Builds</h3>
+                        <p className="text-sm text-[var(--text-dim)] leading-relaxed flex-1">
+                            Websites, mobile apps and custom software — built as a single project, priced upfront.
+                        </p>
+                        <div className="flex items-end gap-2 pt-1">
+                            <span className="text-xs text-[#7070A0] mb-1">From</span>
+                            <span className="text-2xl font-black leading-none" style={{ color: "#C07AF0", fontFamily: "var(--heading)" }}>K2,500</span>
+                        </div>
+                    </Link>
                 </div>
 
                 <div

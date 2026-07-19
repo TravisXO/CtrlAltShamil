@@ -14,11 +14,27 @@ public class SubscriptionRequestController : ControllerBase
 
     private static readonly Dictionary<string, string> PlanLabels = new()
     {
+        // Monthly plans
         ["sitecare-basic"] = "SiteCare — Basic (K500/mo)",
         ["sitecare-seo"] = "SiteCare — + SEO (K750/mo)",
-        ["seo-momentum-basic"] = "SEO Momentum — Basic (K3,500/mo)",
-        ["seo-momentum-ads"] = "SEO Momentum — + Google Ads (K5,000/mo)",
-        ["build-queue"] = "Build Queue (K2,500–K7,500/mo)",
+        ["seo-momentum-basic"] = "SEO Momentum — Basic (K2,750/mo)",
+        ["seo-momentum-ads"] = "SEO Momentum — + Google Ads (K5,500/mo)",
+        // One-off website builds
+        ["website-development-0"] = "Website — Basic business (from K2,500)",
+        ["website-development-1"] = "Website — Professional corporate (from K5,000)",
+        ["website-development-2"] = "Website — With blog / booking / listings / accounts (from K7,500)",
+        ["website-development-3"] = "Website — Basic e-commerce (from K10,000)",
+        ["website-development-4"] = "Website — Advanced e-commerce, payments + inventory (from K15,000)",
+        ["website-development-5"] = "Website — Custom React/ASP.NET web app (from K25,000)",
+        // One-off mobile apps
+        ["mobile-app-development-0"] = "Mobile — Basic Android app with small database (from K15,000)",
+        ["mobile-app-development-1"] = "Mobile — Cross-platform first version, Android + iPhone (from K30,000)",
+        ["mobile-app-development-2"] = "Mobile — Logins, live data, admin dashboard, notifications (from K50,000)",
+        ["mobile-app-development-3"] = "Mobile — E-commerce / delivery / booking / marketplace app (from K75,000)",
+        // One-off custom software
+        ["custom-software-0"] = "Software — Simple internal dashboard or automation (from K10,000)",
+        ["custom-software-1"] = "Software — Booking, invoicing or document management (from K15,000)",
+        ["custom-software-2"] = "Software — Full management system or custom CRM (from K20,000)",
         ["not-sure"] = "Not sure yet — help me choose",
     };
     private static readonly Dictionary<string, string> PayMethodLabels = new()

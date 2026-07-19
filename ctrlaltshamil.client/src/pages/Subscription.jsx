@@ -83,16 +83,17 @@ export const PLANS = [
         tagline: "Fix what's holding your site back on Google, and start climbing.",
         bestFor: "Businesses with a website already live that isn't getting found.",
         variants: [
-            { id: "basic", label: "Basic", priceZmw: 3500, priceUsd: 190 },
-            { id: "ads", label: "+ Google Ads", priceZmw: 5000, priceUsd: 275 },
+            { id: "basic", label: "Basic", priceZmw: 2750, priceUsd: 150 },
+            { id: "ads", label: "+ Google Ads", priceZmw: 5500, priceUsd: 300 },
         ],
         deliverables: [
             { text: "Ongoing technical SEO fixes — the issues quietly hurting your rankings", variant: "basic" },
             { text: "Up to 2 pages optimised for search every month", variant: "basic" },
             { text: "Tracking up to 25 search terms relevant to your business", variant: "basic" },
             { text: "A plain-English monthly report, plus a 30-minute review call", variant: "basic" },
-            { text: "$50–$100 of your monthly fee spent directly on a managed Google Ads campaign", variant: "ads" },
-            { text: "Ad performance tracked and optimised alongside your organic SEO", variant: "ads" },
+            { text: "Google Ads campaigns set up, managed, and optimised for you each month", variant: "ads" },
+            { text: "Ad performance tracked and reported alongside your organic SEO", variant: "ads" },
+            { text: "Your advertising budget is paid separately, direct to Google — it isn't part of this fee", variant: "ads" },
         ],
         limits: "One website. Requests handled in 2–3 business days. Strategy reviewed and adjusted monthly, not daily.",
         pros: [
@@ -102,43 +103,55 @@ export const PLANS = [
         ],
         cons: [
             "SEO takes months to show its full effect — not an overnight fix",
-            "Doesn't include building new pages or features (see Build Queue)",
+            "Doesn't include building new pages or features — those are quoted as one-off projects",
         ],
         accent: "#2EF09A",
         featured: true,
         learnMoreHref: "/services/seo",
         learnMoreLabel: "How the SEO work happens",
     },
+];
+
+/* ── One-off project pricing (build work, billed per project) ──────
+   These are starting prices for a completed build, not monthly fees.
+   Every project is confirmed with a written quote before work begins. */
+export const PROJECT_PRICING = [
     {
-        id: "build-queue",
-        name: "Build Queue",
-        tagline: "An ongoing stream of website changes and improvements, always moving.",
-        bestFor: "Businesses that keep needing things built, fixed, or improved, without a new quote every time.",
-        priceZmwMin: 2500,
-        priceZmwMax: 7500,
-        priceUsdMin: 135,
-        priceUsdMax: 410,
-        deliverables: [
-            { text: "Unlimited requests in your queue — new pages, design polish, backend work, SEO implementation, tracking setup, and more" },
-            { text: "Custom features, integrations, and complex builds — genuinely possible, not just small tweaks" },
-            { text: "One request worked on at a time, so nothing sits half-finished" },
-            { text: "Small requests typically done in 2–4 business days; bigger ones are broken into stages" },
-            { text: "Requests are acknowledged the next business day" },
-            { text: "Direct access to me — no account managers or ticket queues in between" },
-        ],
-        limits: "One active request at a time. Domain and hosting aren't included but can be arranged (quoted separately). Advertising only runs if you supply a separate ad budget.",
-        pros: [
-            "No new invoice for every small request — it's already covered",
-            "Access to genuinely custom, complex builds, not just templated fixes",
-            "Flexible — a landing page this month, an integration the next",
-        ],
-        cons: [
-            "Not built for one giant task needing a full month at once — big projects are staged",
-            "Works best when you already have a running list of things to improve",
-        ],
+        id: "website-development",
+        name: "Website Development",
+        blurb: "A website built for you, from a simple business site up to a full custom web application.",
         accent: "#00CFFF",
-        learnMoreHref: "/services/development",
-        learnMoreLabel: "How Build Queue works",
+        tiers: [
+            { name: "Basic business website", desc: "A clean, mobile-friendly site covering the essentials — who you are, what you offer, and how to get in touch.", zmw: 2500, usd: 135 },
+            { name: "Professional corporate website", desc: "A larger, more polished site with multiple sections, richer design, and room to grow into.", zmw: 5000, usd: 275 },
+            { name: "Website with blog, booking, listings or member accounts", desc: "Adds a real working feature on top of the site — publish articles, take bookings, list properties or products, or let customers log in.", zmw: 7500, usd: 410 },
+            { name: "Basic e-commerce website", desc: "Sell online: a product catalogue, shopping cart, and checkout.", zmw: 10000, usd: 550 },
+            { name: "Advanced e-commerce with payments and inventory", desc: "A full online shop with live payment processing and stock tracking built in.", zmw: 15000, usd: 825 },
+            { name: "Custom React / ASP.NET web application", desc: "A bespoke application built around your specific business process — not a template stretched to fit.", zmw: 25000, usd: 1370 },
+        ],
+    },
+    {
+        id: "mobile-app-development",
+        name: "Mobile App Development",
+        blurb: "Apps for Android and iPhone, from a focused first version to a full marketplace platform.",
+        accent: "#C07AF0",
+        tiers: [
+            { name: "Basic Android app with a small database", desc: "A straightforward Android app that stores and displays your own data.", zmw: 15000, usd: 825 },
+            { name: "Cross-platform first version (Android + iPhone)", desc: "One app that runs on both Android and iPhone — a working first version you can launch and learn from.", zmw: 30000, usd: 1645 },
+            { name: "App with logins, live data, admin dashboard and notifications", desc: "Users can sign in, data syncs with a server, you get a dashboard to manage it, and customers get push notifications.", zmw: 50000, usd: 2745 },
+            { name: "E-commerce, delivery, booking or marketplace app", desc: "A full commercial app where customers transact — the most involved build, with several moving parts.", zmw: 75000, usd: 4115 },
+        ],
+    },
+    {
+        id: "custom-software",
+        name: "Custom Software",
+        blurb: "Internal tools that replace spreadsheets and manual admin with something built for how you actually work.",
+        accent: "#2EF09A",
+        tiers: [
+            { name: "Simple internal dashboard or automation", desc: "One tool that shows your numbers in one place, or takes a repetitive manual job off your hands.", zmw: 10000, usd: 550 },
+            { name: "Booking, invoicing or document-management system", desc: "A working system for one core business process, used day to day by your team.", zmw: 15000, usd: 825 },
+            { name: "Full management system or custom CRM", desc: "Inventory, school, property or clinic management — or a customer database with staff roles, reporting and workflows.", zmw: 20000, usd: 1095 },
+        ],
     },
 ];
 
@@ -164,20 +177,33 @@ export function billingPrice(monthly, cycle) {
     return { total: monthly, perMonth: monthly, billedLabel: "billed monthly" };
 }
 
-/* ── Flattened plan options (for the intake form dropdown) ───────── */
+/* ── Flattened options for the intake form dropdown ───────────────
+   Monthly plans first, then every one-off project tier. */
 export function getPlanOptions() {
-    return PLANS.flatMap((plan) => {
+    const monthly = PLANS.flatMap((plan) => {
         if (plan.variants) {
             return plan.variants.map((v) => ({
                 id: `${plan.id}-${v.id}`,
                 label: `${plan.name} — ${v.label} (K${v.priceZmw.toLocaleString()}/mo)`,
+                group: "Monthly plans",
             }));
         }
-        const priceLabel = plan.priceZmwMin
-            ? `K${plan.priceZmwMin.toLocaleString()}–K${plan.priceZmwMax.toLocaleString()}/mo`
-            : `K${plan.priceZmw.toLocaleString()}/mo`;
-        return [{ id: plan.id, label: `${plan.name} (${priceLabel})` }];
+        return [{
+            id: plan.id,
+            label: `${plan.name} (K${plan.priceZmw.toLocaleString()}/mo)`,
+            group: "Monthly plans",
+        }];
     });
+
+    const projects = PROJECT_PRICING.flatMap((cat) =>
+        cat.tiers.map((t, i) => ({
+            id: `${cat.id}-${i}`,
+            label: `${t.name} (from K${t.zmw.toLocaleString()})`,
+            group: cat.name,
+        }))
+    );
+
+    return [...monthly, ...projects];
 }
 
 /* ── Section heading ───────────────────────────────────────────── */
@@ -225,12 +251,12 @@ function Hero() {
                 <span aria-hidden="true">●</span>
                 Priced in Kwacha for local businesses — pay monthly, or save by paying quarterly or annually.
             </div>
-            <p className="text-sm text-[var(--text-dim)] mt-6">
-                Need a brand-new website built first?{" "}
-                <Link to="/contact" className="text-[var(--cyan)] underline underline-offset-2 hover:text-white transition-colors">
-                    Get a one-time project quote
-                </Link>{" "}
-                — once it's live, any plan below keeps it fast, secure, and growing.
+            <p className="text-base text-[var(--text-dim)] mt-6">
+                Need something built from scratch?{" "}
+                <a href="#projects" className="text-[var(--cyan)] underline underline-offset-2 hover:text-white transition-colors">
+                    See one-off project pricing
+                </a>{" "}
+                for websites, mobile apps and custom software — then add a monthly plan once it's live.
             </p>
         </div>
     );
@@ -238,10 +264,10 @@ function Hero() {
 
 /* ── How it works ──────────────────────────────────────────────── */
 const STEPS = [
-    { n: "01", title: "Pick a plan", text: "Choose the plan below that fits, or pick \"not sure yet\" in the form and describe what you need." },
+    { n: "01", title: "Pick what you need", text: "Choose a monthly plan or a one-off build below — or pick \"not sure yet\" in the form and just describe what you're after." },
     { n: "02", title: "Fill out the project form", text: "One detailed form, so I have everything needed to start — no back-and-forth phone calls required." },
-    { n: "03", title: "Pay by bank or mobile money", text: "Use the bank transfer or mobile money details on this page to pay for your first month." },
-    { n: "04", title: "Email your receipt", text: "Send the payment receipt or screenshot to confirm. Your plan activates within 24 hours." },
+    { n: "03", title: "Get your quote confirmed", text: "For one-off builds you'll get a written quote confirming scope and price. Monthly plans are already priced — nothing to quote." },
+    { n: "04", title: "Pay and get started", text: "Pay by bank transfer or mobile money, email the receipt to confirm, and work begins within 24 hours." },
 ];
 function HowItWorks() {
     const { ref, visible } = useFadeIn(0.1);
@@ -385,10 +411,8 @@ function PlanCard({ plan, index, visible, cycle, onChoose }) {
                     )}
 
                     <PriceBlock
-                        monthlyZmw={hasVariants ? activeVariant.priceZmw : (plan.priceZmwMin ?? plan.priceZmw)}
-                        monthlyUsd={hasVariants ? activeVariant.priceUsd : (plan.priceUsdMin ?? plan.priceUsd)}
-                        rangeMaxZmw={plan.priceZmwMax}
-                        rangeMaxUsd={plan.priceUsdMax}
+                        monthlyZmw={hasVariants ? activeVariant.priceZmw : plan.priceZmw}
+                        monthlyUsd={hasVariants ? activeVariant.priceUsd : plan.priceUsd}
                         cycle={cycle}
                         accent={plan.accent}
                     />
@@ -487,6 +511,68 @@ function PlansGrid({ cycle, onCycleChange, onChoose }) {
     );
 }
 
+/* ── One-off project pricing ───────────────────────────────────── */
+function ProjectPricing({ onChoose }) {
+    const { ref, visible } = useFadeIn(0.05);
+    return (
+        <div ref={ref}>
+            <SectionHeading eyebrow="Build It Once" title="One-off" accentText="project pricing." />
+            <p className="text-base text-[var(--text-dim)] leading-relaxed max-w-2xl -mt-6 mb-10">
+                Building something new is a one-time project, not a monthly plan. These are starting prices for a finished build — you'll always get a written quote confirming the exact cost before any work begins. Once it's live, a monthly plan above can keep it maintained and growing.
+            </p>
+
+            <div className="flex flex-col gap-5">
+                {PROJECT_PRICING.map((cat, ci) => (
+                    <div
+                        key={cat.id}
+                        className="rounded-2xl border overflow-hidden"
+                        style={{
+                            borderColor: "var(--border-subtle)", background: "var(--surface-raised)",
+                            opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
+                            transition: `opacity 0.6s ease ${ci * 0.1}s, transform 0.6s ease ${ci * 0.1}s`,
+                        }}
+                    >
+                        <div className="px-6 py-5 border-b" style={{ borderColor: "#1A1A30", background: `${cat.accent}08` }}>
+                            <h3 className="text-xl font-black mb-1" style={{ color: cat.accent, fontFamily: "var(--heading)" }}>{cat.name}</h3>
+                            <p className="text-sm text-[var(--text-dim)] leading-relaxed">{cat.blurb}</p>
+                        </div>
+
+                        <ul className="divide-y" style={{ borderColor: "#14142A" }}>
+                            {cat.tiers.map((t, ti) => (
+                                <li key={t.name} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 px-6 py-5 border-t first:border-t-0" style={{ borderColor: "#14142A" }}>
+                                    <div className="flex-1">
+                                        <p className="text-[15px] font-semibold text-white/90 leading-snug mb-1">{t.name}</p>
+                                        <p className="text-sm text-[var(--text-dim)] leading-relaxed">{t.desc}</p>
+                                    </div>
+                                    <div className="shrink-0 sm:text-right">
+                                        <p className="text-xs text-[#6A6A90] mb-0.5">from</p>
+                                        <p className="text-2xl font-black leading-none" style={{ color: cat.accent, fontFamily: "var(--heading)" }}>
+                                            K{t.zmw.toLocaleString()}
+                                        </p>
+                                        <p className="text-[13px] font-mono text-[#8888B0] mt-1">≈ ${t.usd.toLocaleString()}</p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => onChoose(`${cat.id}-${ti}`)}
+                                        className="shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] cursor-pointer border"
+                                        style={{ borderColor: `${cat.accent}40`, color: cat.accent, background: `${cat.accent}0D`, fontFamily: "var(--heading)" }}
+                                    >
+                                        Enquire
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+
+            <p className="text-sm text-[#8888B0] leading-relaxed mt-6 max-w-2xl">
+                Prices are starting points — the final quote depends on how many pages, features and integrations your project actually needs. Domain, hosting, and any third-party service fees (payment gateways, SMS, mapping) are billed separately.
+            </p>
+        </div>
+    );
+}
+
 /* ── Comparison table ──────────────────────────────────────────── */
 const LABEL_STYLES = {
     "Included": { color: "#2EF09A", background: "#2EF09A12" },
@@ -504,23 +590,29 @@ function ComparisonCell({ value }) {
         </span>
     );
 }
+const COMPARISON_COLUMNS = [
+    { name: "SiteCare", accent: "#00CFFF", note: "Monthly" },
+    { name: "SEO Momentum", accent: "#2EF09A", note: "Monthly" },
+    { name: "One-off Build", accent: "#C07AF0", note: "Per project" },
+];
 const COMPARISON_ROWS = [
+    { label: "How it's billed", values: ["Monthly subscription", "Monthly subscription", "One-time project fee"] },
     { label: "Website design & development", values: ["Not included", "Not included", "Included"] },
     { label: "Mobile responsiveness", values: ["Not included", "Not included", "Included"] },
     { label: "Content management", values: ["Included", "Not included", "Included"] },
     { label: "Search engine optimisation", values: ["Optional add-on", "Included", "Included"] },
-    { label: "Analytics & tracking", values: ["Optional add-on", "Included", "Included"] },
+    { label: "Analytics & tracking", values: ["Optional add-on", "Included", "Optional add-on"] },
     { label: "Domain provision", values: ["Not included", "Not included", "Quoted separately"] },
     { label: "Hosting provision", values: ["Not included", "Not included", "Quoted separately"] },
-    { label: "Website maintenance", values: ["Included", "Not included", "Included"] },
-    { label: "Content updates", values: ["Included", "Not included", "Included"] },
-    { label: "Technical support", values: ["Included", "Included", "Included"] },
-    { label: "Google Ads support", values: ["Not included", "Optional add-on", "Requires advertising budget"] },
-    { label: "Advertising budget requirement", values: ["Not included", "Not included", "Requires advertising budget"] },
+    { label: "Website maintenance", values: ["Included", "Not included", "Not included"] },
+    { label: "Content updates", values: ["Included", "Not included", "Not included"] },
+    { label: "Technical support", values: ["Included", "Included", "During the build"] },
+    { label: "Google Ads support", values: ["Not included", "Optional add-on", "Not included"] },
+    { label: "Advertising budget requirement", values: ["Not included", "Requires advertising budget", "Not included"] },
     { label: "Custom integrations", values: ["Not included", "Not included", "Included"] },
-    { label: "Typical delivery timeline", values: ["2 business days", "2–3 business days", "2–4 business days, staged for larger work"] },
-    { label: "Revision / request limits", values: ["Up to 3 per month", "2 pages per month", "One active request at a time"] },
-    { label: "Ongoing monthly support", values: ["Included", "Included", "Included"] },
+    { label: "Typical delivery timeline", values: ["2 business days", "2–3 business days", "Agreed per project"] },
+    { label: "Revision / request limits", values: ["Up to 3 per month", "2 pages per month", "Agreed in the quote"] },
+    { label: "Ongoing monthly support", values: ["Included", "Included", "Add a monthly plan"] },
     { label: "Ownership & access", values: ["You keep full ownership", "You keep full ownership", "You keep full ownership"] },
 ];
 function ComparisonTable() {
@@ -533,8 +625,11 @@ function ComparisonTable() {
                     <thead>
                         <tr className="border-b" style={{ borderColor: "#1A1A30" }}>
                             <th className="text-left font-mono text-[11px] uppercase tracking-widest text-[#6A6A90] p-5">Feature</th>
-                            {PLANS.map((p) => (
-                                <th key={p.id} className="text-left text-lg font-bold p-5" style={{ color: p.accent, fontFamily: "var(--heading)" }}>{p.name}</th>
+                            {COMPARISON_COLUMNS.map((c) => (
+                                <th key={c.name} className="text-left p-5" style={{ color: c.accent, fontFamily: "var(--heading)" }}>
+                                    <span className="block text-lg font-bold">{c.name}</span>
+                                    <span className="block text-[11px] font-mono uppercase tracking-widest text-[#6A6A90] mt-0.5">{c.note}</span>
+                                </th>
                             ))}
                         </tr>
                     </thead>
@@ -586,7 +681,7 @@ function DomainHosting() {
                     </p>
                 </div>
                 <div className="rounded-xl border p-5" style={{ borderColor: "#1A1A30", background: "#0D0D1A" }}>
-                    <p className="text-sm font-bold text-white/90 mb-2">Build Queue</p>
+                    <p className="text-sm font-bold text-white/90 mb-2">One-off builds</p>
                     <p className="text-sm text-[var(--text-dim)] leading-relaxed">
                         If you need a domain registered or hosting set up as part of your project, it can be arranged for you — this is quoted separately based on what you need (e.g. domain registrar fees, hosting tier). It isn't a free or unlimited inclusion, and ongoing costs like domain renewals are the client's responsibility going forward.
                     </p>
@@ -602,18 +697,18 @@ function Advertising() {
         <InfoBlock eyebrow="Advertising" title="Google Ads &amp;" accentText="ad spend, explained.">
             <div className="rounded-xl border p-5" style={{ borderColor: "#1A1A30", background: "#0D0D1A" }}>
                 <div className="flex items-end gap-2 flex-wrap mb-2">
-                    <span className="text-2xl font-black leading-none" style={{ color: "var(--cyan)", fontFamily: "var(--heading)" }}>$350</span>
-                    <span className="text-sm text-[var(--text-dim)]">/ month — Google Ads management fee</span>
+                    <span className="text-2xl font-black leading-none" style={{ color: "var(--cyan)", fontFamily: "var(--heading)" }}>K5,500</span>
+                    <span className="text-sm text-[var(--text-dim)]">/ month (≈ $300) — Google Ads management</span>
                 </div>
                 <p className="text-sm text-[var(--text-dim)] leading-relaxed">
-                    This is a recurring monthly fee for setting up, running, and optimising your Google Ads campaigns. <strong className="text-white/85">It does not include your advertising budget</strong> — the money spent on the ads themselves is paid directly to Google, separately, based on whatever budget you choose to set.
+                    This is the <strong className="text-white/85">SEO Momentum “+ Google Ads”</strong> option: everything in SEO Momentum, plus your Google Ads campaigns set up, managed and optimised each month. <strong className="text-white/85">It does not include your advertising budget</strong> — the money spent on the ads themselves is paid directly to Google, separately, based on whatever budget you choose to set.
                 </p>
             </div>
 
             <div className="rounded-xl border p-5" style={{ borderColor: "#1A1A30", background: "#0D0D1A" }}>
-                <p className="text-sm font-bold text-white/90 mb-2">Advertising on Build Queue</p>
+                <p className="text-sm font-bold text-white/90 mb-2">Advertising and one-off builds</p>
                 <p className="text-sm text-[var(--text-dim)] leading-relaxed">
-                    Build Queue's monthly fee is a development fee — it is never presented as your advertising spend. Advertising is only ever included on Build Queue when you separately provide an ad budget; the project fee, the ad-management fee, and your ad budget are always kept distinct.
+                    A project fee for building a website or app is a development fee — it is never your advertising spend, and no advertising runs as part of it. If you want ads running alongside a new build, that's the SEO Momentum “+ Google Ads” plan above, plus your own ad budget. The project fee, the ad-management fee, and your ad budget are always kept separate.
                 </p>
             </div>
 
@@ -629,9 +724,10 @@ function Advertising() {
 
 /* ── Which plan is right for me? ──────────────────────────────────── */
 const RECOMMENDATIONS = [
-    { plan: "SiteCare", text: "you already have a website and just need ongoing updates, maintenance, and technical support." },
-    { plan: "SEO Momentum", text: "your website exists but isn't showing up on Google, and you want steady, trackable movement in search rankings." },
-    { plan: "Build Queue", text: "you need an ongoing stream of development work — new pages, features, integrations — delivered through a managed queue instead of one-off quotes." },
+    { plan: "SiteCare", accent: "#00CFFF", text: "you already have a website and just need ongoing updates, maintenance, and technical support." },
+    { plan: "SEO Momentum", accent: "#2EF09A", text: "your website exists but isn't showing up on Google, and you want steady, trackable movement in search rankings." },
+    { plan: "a one-off build", accent: "#C07AF0", text: "you need something new made — a website, a mobile app, or internal software — priced and delivered as a single project." },
+    { plan: "both", accent: "#F0C22E", text: "you need something built now and kept growing afterwards: start with a one-off build, then add a monthly plan once it's live." },
 ];
 function PlanRecommendation() {
     const { ref, visible } = useFadeIn(0.1);
@@ -640,7 +736,6 @@ function PlanRecommendation() {
             <SectionHeading eyebrow="Not Sure?" title="Which plan is" accentText="right for me?" />
             <div className="flex flex-col gap-3">
                 {RECOMMENDATIONS.map((r, i) => {
-                    const plan = PLANS.find((p) => p.name === r.plan);
                     return (
                         <div
                             key={r.plan}
@@ -651,7 +746,7 @@ function PlanRecommendation() {
                                 transition: `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`,
                             }}
                         >
-                            <span className="shrink-0 text-sm font-bold sm:w-40" style={{ color: plan?.accent, fontFamily: "var(--heading)" }}>Choose {r.plan}</span>
+                            <span className="shrink-0 text-sm font-bold sm:w-44" style={{ color: r.accent, fontFamily: "var(--heading)" }}>Choose {r.plan}</span>
                             <p className="text-sm text-white/75 leading-relaxed">when {r.text}</p>
                         </div>
                     );
@@ -708,7 +803,7 @@ function PaymentInstructions() {
 /* ── FAQ ───────────────────────────────────────────────────────── */
 const FAQS = [
     { q: "How does billing work?", a: "Plans are billed in advance, starting the day your first payment is confirmed. There's no setup fee. Choose monthly, quarterly, or annual billing — quarterly saves 15% and annual saves 25%, calculated straight off the monthly price." },
-    { q: "Can I pause or cancel?", a: "Yes. Cancel any time with at least 7 days' notice before your next billing date — no long contracts. Build Queue can also be paused once every 90 days, for up to 14 days." },
+    { q: "Can I pause or cancel?", a: "Yes — monthly plans can be cancelled any time with at least 7 days' notice before your next billing date, and there are no long contracts. One-off project builds aren't subscriptions, so there's nothing to cancel: you agree the scope and price upfront, and that's what you pay." },
     { q: "What if I need something outside my plan?", a: "Anything beyond what's included gets quoted separately as its own project, or added to your queue for the following month. You'll always know the cost before it happens." },
     { q: "Do you offer refunds?", a: "If you cancel before any work has started, you get a full refund. Once work has begun or been delivered for the month, that month isn't refunded — but nothing renews without your next payment confirmation either." },
     { q: "What if I'm not sure which plan is right for me?", a: "Choose \"Not sure yet — help me choose\" in the form below and describe what you need. I'll recommend the right plan before anything is charged." },
@@ -975,10 +1070,19 @@ function IntakeForm({ selectedPlan }) {
                             <FormSection n="2" title="Plan & payment">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
-                                        <label htmlFor="plan" className={labelBase}>Which plan? <span className="text-[#00CFFF]">*</span></label>
+                                        <label htmlFor="plan" className={labelBase}>What do you need? <span className="text-[#00CFFF]">*</span></label>
                                         <select id="plan" name="plan" required value={form.plan} onChange={handleChange} className={`${fieldClass("plan")} cursor-pointer`}>
-                                            <option value="" disabled>Select a plan…</option>
-                                            {getPlanOptions().map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+                                            <option value="" disabled>Select an option…</option>
+                                            {Object.entries(
+                                                getPlanOptions().reduce((acc, o) => {
+                                                    (acc[o.group] ||= []).push(o);
+                                                    return acc;
+                                                }, {})
+                                            ).map(([group, opts]) => (
+                                                <optgroup key={group} label={group}>
+                                                    {opts.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+                                                </optgroup>
+                                            ))}
                                             <option value="not-sure">Not sure yet — help me choose</option>
                                         </select>
                                     </div>
@@ -1188,6 +1292,10 @@ export default function Subscription() {
 
                 <div id="plans" className="py-14 sm:py-20 border-t border-[var(--border-subtle)]">
                     <PlansGrid cycle={cycle} onCycleChange={setCycle} onChoose={handleChoose} />
+                </div>
+
+                <div id="projects" className="py-14 sm:py-20 border-t border-[var(--border-subtle)]">
+                    <ProjectPricing onChoose={handleChoose} />
                 </div>
 
                 <div className="py-14 sm:py-20 border-t border-[var(--border-subtle)] flex flex-col gap-5">

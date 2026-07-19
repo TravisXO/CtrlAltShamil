@@ -72,7 +72,7 @@ const STEPS = [
     { n: "1", title: "Scoping", text: "Understanding what actually needs to be built, in plain terms, before a single line of code is written." },
     { n: "2", title: "Build", text: "A modern stack — React on the frontend, ASP.NET Core on the backend — chosen for speed and reliability, not because it's trendy." },
     { n: "3", title: "Review", text: "Tested across devices and screen sizes before anything ships, not after a customer finds the problem." },
-    { n: "4", title: "Ongoing delivery", text: "For Build Queue clients, work continues as a steady stream rather than a single handoff and goodbye." },
+    { n: "4", title: "Ongoing delivery", text: "Larger builds are delivered in agreed stages, so you see working progress rather than waiting months for one big reveal." },
 ];
 
 const USE_CASES = [
@@ -87,20 +87,20 @@ const INDUSTRIES = ["Real estate", "Hospitality & tourism", "Professional servic
 
 const ADVANTAGES = [
     "Access to genuinely custom builds, not templated fixes stretched to fit",
-    "No new invoice for every small request once you're on Build Queue",
+    "A clear, agreed price upfront — no surprise invoices mid-project",
     "A developer who already knows your codebase, instead of re-explaining context to someone new each time",
 ];
 const LIMITATIONS = [
-    "Build Queue works on one active request at a time, so very large projects are staged across months rather than delivered instantly",
+    "Larger projects are staged over several weeks or months rather than delivered instantly",
     "Domain and hosting aren't included by default — arranged separately when needed",
     "This is development work, not advertising — any ad spend for a project is always handled and billed separately",
 ];
 
 const FAQS = [
-    { q: "Can you build [specific feature]?", a: "Very likely — describe what you need via the project form and it'll get an honest answer, including whether it fits inside a managed queue or needs a separate quote. Modern AI-assisted development means custom features, integrations, and tools that would once have needed a full engineering team are realistically achievable for a much wider range of projects than before." },
+    { q: "Can you build [specific feature]?", a: "Very likely — describe what you need via the project form and it'll get an honest answer, including roughly what it would cost. Modern AI-assisted development means custom features, integrations, and tools that would once have needed a full engineering team are realistically achievable for a much wider range of projects than before." },
     { q: "Do I own the code and content?", a: "Yes. Once a project is paid for, you own what was built specifically for you. Reusable tools, patterns, and general know-how developed along the way remain part of the toolkit used across projects." },
-    { q: "What if my project is too big for the queue?", a: "Bigger projects are simply broken into stages and worked through the queue over several months, or scoped as a standalone project quote if that's a cleaner fit. Either way, cost and timeline are agreed upfront." },
-    { q: "Do you offer one-time builds instead of a subscription?", a: "Yes — a brand-new website built from scratch is usually a one-time project, quoted directly rather than through a monthly plan. Once it's live, Build Queue can take over keeping it maintained and growing." },
+    { q: "How is a build priced?", a: "As a one-off project fee, agreed upfront in a written quote before any work starts — not a monthly subscription. Published prices are starting points; the final figure depends on how many pages, features and integrations your project actually needs." },
+    { q: "What happens after it launches?", a: "Nothing is forced on you. If you want the site kept updated, secure and climbing on Google afterwards, the SiteCare or SEO Momentum monthly plans are there — but a build is a complete deliverable on its own." },
 ];
 
 export default function ServicesDevelopment() {
@@ -206,11 +206,11 @@ export default function ServicesDevelopment() {
                 <FadeSection>
                     <SectionHeading eyebrow="Pricing" title="Ongoing, or" accentText="one-time." />
                     <p className="text-sm text-[var(--text-dim)] leading-relaxed max-w-2xl mb-3">
-                        Ongoing development is delivered through Build Queue, a monthly plan. A brand-new website built entirely from scratch is usually quoted as a one-time project instead — once it's live, Build Queue can take over keeping it maintained and growing.
+                        Builds are priced as one-off projects — websites from K2,500, mobile apps from K15,000, and custom software from K10,000 — with a written quote confirming the exact cost before work starts. Once it's live, the SiteCare or SEO Momentum monthly plans can keep it maintained and growing.
                     </p>
                     <div className="flex flex-wrap gap-3 mb-10">
-                        <Link to="/subscription#plans" className="inline-flex items-center gap-2 text-sm font-mono px-5 py-2.5 rounded-xl border transition-all duration-200 hover:brightness-125" style={{ borderColor: "#00CFFF40", color: "var(--cyan)", background: "#00CFFF0D" }}>
-                            See Build Queue pricing
+                        <Link to="/subscription#projects" className="inline-flex items-center gap-2 text-sm font-mono px-5 py-2.5 rounded-xl border transition-all duration-200 hover:brightness-125" style={{ borderColor: "#00CFFF40", color: "var(--cyan)", background: "#00CFFF0D" }}>
+                            See one-off project pricing
                         </Link>
                         <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-mono px-5 py-2.5 rounded-xl border border-[#2A2A45] text-[#A0A0C0] hover:text-white hover:border-[#50506A] transition-all duration-200">
                             Get a one-time project quote
